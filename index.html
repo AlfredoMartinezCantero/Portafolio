@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Portafolio - Alfredo Martínez Cantero</title>
+    <style>
+        /********** ESTILOS GENERALES **********/
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /********** HEADER **********/
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, darkorchid, #d1409e);
+            color: white;
+        }
+
+        .titulo {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .subtitulo {
+            margin: 5px 0 0 0;
+            font-weight: 300;
+        }
+
+        /********** GRID DE PROYECTOS **********/
+        .grid {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        /********** TARJETAS **********/
+        .card {
+            background: rgb(215, 209, 209);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            margin-top: 15px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .boton {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #3a7bd5;
+            color: white;
+            border-radius: 8px;
+            transition: background .2s;
+        }
+
+        .boton:hover {
+            background: #285c9b;
+        }
+
+        /********** FOOTER **********/
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #222;
+            color: #eee;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1 class="titulo">Alfredo Martínez Cantero</h1>
+    <h2 class="subtitulo">Portafolio Web</h2>
+</header>
+
+<main class="grid">
+
+    <article class="card">
+        <img src="foto cv.png" alt="Imagen del proyecto">
+        <h3>Título del proyecto</h3>
+        <p>Párrafo con una descripción del proyecto.</p>
+        <a href="otrapagina.html" class="boton">Saber más</a>
+    </article>
+
+    <article class="card">
+        <img src="foto cv.png" alt="Imagen del proyecto">
+        <h3>Título del proyecto</h3>
+        <p>Párrafo con una descripción del proyecto.</p>
+        <a href="otrapagina.html" class="boton">Saber más</a>
+    </article>
+
+    <article class="card">
+        <img src="foto cv.png" alt="Imagen del proyecto">
+        <h3>Título del proyecto</h3>
+        <p>Párrafo con una descripción del proyecto.</p>
+        <a href="otrapagina.html" class="boton">Saber más</a>
+    </article>
+
+    <article class="card">
+        <img src="foto cv.png" alt="Imagen del proyecto">
+        <h3>Título del proyecto</h3>
+        <p>Párrafo con una descripción del proyecto.</p>
+        <a href="otrapagina.html" class="boton">Saber más</a>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <p>alfredomartinezcantero@gmail.com — +34 653 358 447</p>
+</footer>
+
+</body>
+</html>
+
+
