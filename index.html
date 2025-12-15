@@ -2,19 +2,42 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio - Alfredo Martínez Cantero</title>
     <style>
+        /* Variables CSS para Clean Code y DRY */
+        :root {
+            --primary-color: #3a7bd5; 
+            --secondary-color: #285c9b; 
+            --header-bg-start: darkorchid;
+            --header-bg-end: #d1409e;
+            --text-dark: #222;
+            --text-light: #f5f5f5;
+            --card-bg: #ffffff; 
+            --code-bg: #282c34; /* Fondo oscuro para el código */
+            --code-text: #abb2bf; /* Texto claro para el código */
+        }
+
         /********** ESTILOS GENERALES **********/
         body {
             font-family: "Segoe UI", sans-serif;
             margin: 0;
-            background: #f5f5f5;
-            color: #222;
+            background: var(--text-light);
+            color: var(--text-dark);
         }
 
         img {
             width: 100%;
             border-radius: 10px;
+        }
+        
+        /* Estilo para imágenes y canvas dentro de la tarjeta */
+        .card > img, .card > canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-sizing: border-box;
         }
 
         a {
@@ -25,7 +48,7 @@
         .header {
             text-align: center;
             padding: 50px 20px;
-            background: linear-gradient(135deg, darkorchid, #d1409e);
+            background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end));
             color: white;
         }
 
@@ -38,22 +61,28 @@
             margin: 5px 0 0 0;
             font-weight: 300;
         }
-
+        
         /********** GRID DE PROYECTOS **********/
         .grid {
             padding: 40px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /********** TARJETAS **********/
         .card {
-            background: rgb(215, 209, 209);
+            background: var(--card-bg);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform .2s, box-shadow .2s;
+            overflow: hidden; 
+            /* Para forzar el botón al final y centrarlo, usamos flex */
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
@@ -68,28 +97,108 @@
         .card p {
             font-size: 0.95rem;
             color: #555;
+            flex-grow: 1; /* Permite que el párrafo ocupe el espacio antes del botón */
         }
 
+        /* Contenedor de acciones centrado */
+        .card-actions {
+            display: flex;
+            justify-content: center; /* Centra el contenido horizontalmente */
+            gap: 10px;
+            margin-top: 15px; /* Espacio extra sobre el footer de la tarjeta */
+        }
+        
+        /* Estilo específico para el botón simple centrado */
+        .card-actions.single-button a.boton {
+            flex-grow: 0; /* Deshabilita el grow para que no ocupe todo el ancho */
+            width: auto;
+            min-width: 180px; /* Ancho mínimo para que se vea bien */
+        }
+        
         .boton {
-            display: inline-block;
-            margin-top: 10px;
+            text-align: center;
             padding: 10px 15px;
-            background: #3a7bd5;
+            background: var(--primary-color);
             color: white;
             border-radius: 8px;
             transition: background .2s;
+            cursor: pointer; 
+            border: none;
+            box-sizing: border-box;
+            text-decoration: none; 
+            display: inline-block;
         }
 
         .boton:hover {
-            background: #285c9b;
+            background: var(--secondary-color);
         }
 
+        /********** ESTILOS ESPECÍFICOS DEL CANVAS **********/
+        #relojCanvas {
+            max-width: 100%;
+            height: auto;
+            width: 100%; 
+            border: 5px solid #000;
+            border-radius: 50%; 
+            box-sizing: border-box;
+        }
+        
+        /********** ESTILOS DEL MODAL (DIALOG) **********/
+        dialog {
+            border: none;
+            padding: 0;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 90vw;
+            width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-content {
+            padding: 10px;
+            max-height: calc(90vh - 70px);
+            overflow-y: auto;
+            background: var(--code-bg);
+        }
+        
+        pre {
+            margin: 0;
+            padding: 10px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--code-text);
+            overflow-x: auto;
+        }
+        
         /********** FOOTER **********/
         .footer {
             text-align: center;
             padding: 20px;
-            background: #222;
-            color: #eee;
+            background: var(--text-dark);
+            color: var(--text-light);
             margin-top: 40px;
         }
     </style>
@@ -103,33 +212,47 @@
 </header>
 
 <main class="grid">
-
+    
     <article class="card">
-        <img src="foto cv.png" alt="Imagen del proyecto">
-        <h3>Título del proyecto</h3>
-        <p>Párrafo con una descripción del proyecto.</p>
-        <a href="otrapagina.html" class="boton">Saber más</a>
+        <canvas id="relojCanvas" width="512" height="512"></canvas>
+        <h3>Reloj Analógico Dinámico (Canvas API)</h3>
+        <p>Implementación de un reloj que utiliza la API de Canvas para el dibujo y `requestAnimationFrame` para la animación fluida y eficiente.</p>
+        <div class="card-actions">
+            <button id="open-clock-code" class="boton">Ver Código</button>
+        </div>
+    </article>
+    
+    <article class="card">
+        <img src="npcs.png" alt="Previsualización de la Simulación de NPC's"> 
+        <h3>Simulación de NPC's (Flask + Python)</h3>
+        <p>Modelo de comportamiento de NPC's con lógica de rebote y movimiento errático. La demo y el código se encuentran en LinkedIn.</p>
+        
+        <div class="card-actions single-button">
+            <a href="https://www.linkedin.com/posts/alfredomart%C3%ADnez_ya-hace-3-meses-que-empec%C3%A9-a-estudiar-desarrollo-activity-7400521730491842560-QLwG?utm_source=share&utm_medium=member_desktop&rcm=ACoAADwclm4B0Gm9BtORsl-Y1IhaHmIl_719QlY" 
+               class="boton" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                Ver Proyecto y Código
+            </a>
+        </div>
     </article>
 
     <article class="card">
         <img src="foto cv.png" alt="Imagen del proyecto">
-        <h3>Título del proyecto</h3>
+        <h3>Título del proyecto 3</h3>
         <p>Párrafo con una descripción del proyecto.</p>
-        <a href="otrapagina.html" class="boton">Saber más</a>
+        <div class="card-actions">
+            <a href="otrapagina.html" class="boton">Saber más</a>
+        </div>
     </article>
 
     <article class="card">
         <img src="foto cv.png" alt="Imagen del proyecto">
-        <h3>Título del proyecto</h3>
+        <h3>Título del proyecto 4</h3>
         <p>Párrafo con una descripción del proyecto.</p>
-        <a href="otrapagina.html" class="boton">Saber más</a>
-    </article>
-
-    <article class="card">
-        <img src="foto cv.png" alt="Imagen del proyecto">
-        <h3>Título del proyecto</h3>
-        <p>Párrafo con una descripción del proyecto.</p>
-        <a href="otrapagina.html" class="boton">Saber más</a>
+        <div class="card-actions">
+            <a href="otrapagina.html" class="boton">Saber más</a>
+        </div>
     </article>
 
 </main>
@@ -138,7 +261,115 @@
     <p>alfredomartinezcantero@gmail.com — +34 653 358 447</p>
 </footer>
 
+<dialog id="code-modal">
+    <div class="modal-header">
+        <h2>Código JavaScript del Reloj</h2>
+        <button id="close-modal" class="modal-close-btn">&times;</button>
+    </div>
+    <div class="modal-content">
+        <pre id="clock-code-content"></pre>
+    </div>
+</dialog>
+
+<script id="main-scripts">
+    
+    /* ************************************************************ */
+    /* LÓGICA DEL RELOJ DE CANVAS (PROYECTO 1) */
+    /* ************************************************************ */
+
+    // IIFE para encapsular la lógica del reloj
+    (function() {
+        const canvas = document.getElementById("relojCanvas");
+        if (!canvas || !canvas.getContext) return;
+
+        const ctx = canvas.getContext("2d");
+        ctx.lineCap = "round";
+        const SIZE = canvas.width;
+        const CENTER = SIZE / 2;
+        const TAU = 2 * Math.PI; 
+        const HOUR_LENGTH = 80;  
+        const MINUTE_LENGTH = 130; 
+        const SECOND_LENGTH = 180;
+        const OUTER_RING_RADIUS = 200;
+
+        function drawClock() {
+            try {
+                const now = new Date();
+                const hour = now.getHours() % 12; 
+                const minute = now.getMinutes();
+                const second = now.getSeconds();
+                const ms = now.getMilliseconds();
+                
+                ctx.clearRect(0, 0, SIZE, SIZE);
+                ctx.lineWidth = 25; ctx.strokeStyle = "black";
+                ctx.beginPath(); ctx.arc(CENTER, CENTER, OUTER_RING_RADIUS, 0, TAU); ctx.stroke();
+                
+                // Horas
+                const hourFraction = (minute / 60) + (second / 3600);
+                const angleHour = (hour + hourFraction) * (TAU / 12) - (TAU / 4); 
+                ctx.lineWidth = 20; ctx.strokeStyle = "blue";
+                ctx.beginPath(); ctx.moveTo(CENTER, CENTER);
+                ctx.lineTo(CENTER + Math.cos(angleHour) * HOUR_LENGTH, CENTER + Math.sin(angleHour) * HOUR_LENGTH);
+                ctx.stroke();
+
+                // Minutos
+                const minuteFraction = (second / 60) + (ms / 60000);
+                const angleMinute = (minute + minuteFraction) * (TAU / 60) - (TAU / 4);
+                ctx.lineWidth = 15; ctx.strokeStyle = "green";
+                ctx.beginPath(); ctx.moveTo(CENTER, CENTER);
+                ctx.lineTo(CENTER + Math.cos(angleMinute) * MINUTE_LENGTH, CENTER + Math.sin(angleMinute) * MINUTE_LENGTH);
+                ctx.stroke();
+
+                // Segundos
+                const secondFraction = (ms / 1000);
+                const angleSecond = (second + secondFraction) * (TAU / 60) - (TAU / 4);
+                ctx.lineWidth = 5; ctx.strokeStyle = "red";
+                ctx.beginPath(); ctx.moveTo(CENTER, CENTER);
+                ctx.lineTo(CENTER + Math.cos(angleSecond) * SECOND_LENGTH, CENTER + Math.sin(angleSecond) * SECOND_LENGTH);
+                ctx.stroke();
+
+                // Círculo central
+                ctx.fillStyle = "black"; ctx.beginPath(); ctx.arc(CENTER, CENTER, 10, 0, TAU); ctx.fill();
+
+                requestAnimationFrame(drawClock);
+
+            } catch (error) {
+                console.error("Error en la función drawClock:", error);
+            }
+        }
+
+        requestAnimationFrame(drawClock);
+
+        /* Lógica del Modal del Reloj */
+        const modal = document.getElementById('code-modal');
+        const openBtn = document.getElementById('open-clock-code');
+        const closeBtn = document.getElementById('close-modal');
+        const codeContent = document.getElementById('clock-code-content');
+
+        // Código JS del reloj para inyección
+        const scriptContent = `// LÓGICA DEL RELOJ DE CANVAS (Implementación pura en JavaScript)
+(function() {
+    const canvas = document.getElementById("relojCanvas");
+    const ctx = canvas.getContext("2d");
+    const SIZE = canvas.width;
+    // ... (Definición de constantes y drawClock) ...
+    
+    function drawClock() {
+        // Lógica de obtención de Date() y cálculo de ángulos fraccionales.
+        
+        // Dibujo de marco y agujas (horas, minutos, segundos)
+        
+        requestAnimationFrame(drawClock);
+    }
+    requestAnimationFrame(drawClock);
+})();`;
+
+        codeContent.textContent = scriptContent;
+
+        if(openBtn) openBtn.addEventListener('click', () => modal.showModal());
+        if(closeBtn) closeBtn.addEventListener('click', () => modal.close());
+    })();
+</script>
+
 </body>
 </html>
-
-
