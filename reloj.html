@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reloj Analógico (Canvas) — AMC</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg,#d0d4db,#b8bec7);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    canvas {
+      background: radial-gradient(circle at center, #ffffff 70%, #e5e5e5 100%);
+      border-radius: 50%;
+      border: 10px solid #222;
+      box-shadow:
+        0 0 25px rgba(0,0,0,0.3),
+        inset 0 0 18px rgba(0,0,0,0.18);
+    }
+    /* botón para volver al portfolio */
+    .back {
+      position: fixed; top: 12px; left: 12px;
+      background: rgba(0,0,0,.65); color: #fff; text-decoration: none;
+      padding: .5rem .75rem; border-radius: .5rem; font-weight: 600;
+    }
+    .back:hover { background: rgba(0,0,0,.8); }
+  </style>
+</head>
+<body>
+  <a class="back" href="./">← Volver al portafolio</a>
+  <canvas></canvas>
+
+  <script>
+    // Inicialización
+    let temporizador = setTimeout("bucle()",1000);
+    let lienzo = document.querySelector("canvas");
+    lienzo.width = 512;
+    lienzo.height = 512;
+    let ctx = lienzo.getContext("2d");
+    ctx.lineCap = "round";
+
+    function dibujarNumeros() {
+      ctx.fillStyle = "#000";
+      ctx.font = "bold 34px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let n = 1; n <= 12; n++) {
+        let ang = (n * Math.PI / 6) - Math.PI/2;
+        // Números más hacia adentro
+        let x = 256 + Math.cos(ang) * 145;
+        let y = 256 + Math.sin(ang) * 145;
+        ctx.fillText(n, x, y);
+      }
+    }
+
+    function dibujarMarcas() {
+      for (let i = 0; i < 60; i++) {
+        let ang = i * Math.PI / 30;
+        let x1 = 256 + Math.cos(ang) * 190;
+        let y1 = 256 + Math.sin(ang) * 190;
+
+        // Marcas grandes un poco más hacia adentro
+        let x2 = 256 + Math.cos(ang) * (i % 5 === 0 ? 160 : 180);
+        let y2 = 256 + Math.sin(ang) * (i % 5 === 0 ? 160 : 180);
+
+        ctx.lineWidth = i % 5 === 0 ? 6 : 2;
+        ctx.strokeStyle = "#000";
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+    }
+
+    function bucle(){
+      let fecha = new Date();
+      let hora = fecha.getHours();
+      let minuto = fecha.getMinutes();
+      let segundo = fecha.getSeconds();
+
+      ctx.clearRect(0,0,512,512);
+
+      // Fondo circular
+      let grad = ctx.createRadialGradient(256,256,50,256,256,200);
+      grad.addColorStop(0, "#fff");
+      grad.addColorStop(1, "#e3e3e3");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(256,256,200,0,Math.PI*2);
+      ctx.fill();
+
+      dibujarMarcas();
+      dibujarNumeros();
+
+      // Aguja de horas
+      ctx.lineWidth = 18;
+      ctx.strokeStyle = "#222";
+      ctx.shadowColor = "rgba(0,0,0,0.4)";
+      ctx.shadowBlur = 10;
+      let angH = (hora%12)*(Math.PI*2/12)+(minuto/60)*(Math.PI*2/12)-Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(256,256);
+      ctx.lineTo(256+Math.cos(angH)*95, 256+Math.sin(angH)*95);
+      ctx.stroke();
+
+      // Aguja de minutos
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = "#333";
+      let angM = minuto*(Math.PI*2/60)-Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(256,256);
+      ctx.lineTo(256+Math.cos(angM)*145, 256+Math.sin(angM)*145);
+      ctx.stroke();
+
+      // Aguja de segundos (roja)
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#CC0000";
+      let angS = segundo*(Math.PI*2/60)-Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(256,256);
+      ctx.lineTo(256+Math.cos(angS)*165, 256+Math.sin(angS)*165);
+      ctx.stroke();
+
+      // Centro metálico
+      let grad2 = ctx.createRadialGradient(256,256,5,256,256,35);
+      grad2.addColorStop(0, "#555");
+      grad2.addColorStop(1, "#000");
+      ctx.fillStyle = grad2;
+      ctx.beginPath();
+      ctx.arc(256,256,30,0,Math.PI*2);
+      ctx.fill();
+
+      clearTimeout(temporizador);
+      temporizador = setTimeout("bucle()",1000);
+    }
+  </script>
+</body>
+</html>

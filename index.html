@@ -1,386 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio - Alfredo Martínez Cantero</title>
-    <style>
-        /* Variables CSS para Clean Code y DRY */
-        :root {
-            --primary-color: #3a7bd5; 
-            --secondary-color: #285c9b; 
-            --header-bg-start: darkorchid;
-            --header-bg-end: #d1409e;
-            --text-dark: #222;
-            --text-light: #f5f5f5;
-            --card-bg: #ffffff; 
-            --code-bg: #282c34; /* Fondo oscuro para el código */
-            --code-text: #abb2bf; /* Texto claro para el código */
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portafolio — Alfredo Martínez Cantero</title>
+  <meta name="description" content="Portafolio de proyectos (Python, JS, PHP, SQL, IA) de Alfredo Martínez Cantero." />
 
-        /********** ESTILOS GENERALES **********/
-        body {
-            font-family: "Segoe UI", sans-serif;
-            margin: 0;
-            background: var(--text-light);
-            color: var(--text-dark);
-        }
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-        img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        
-        /* Estilo para imágenes y canvas dentro de la tarjeta */
-        .card > img, .card > canvas {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        /********** HEADER **********/
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end));
-            color: white;
-        }
-
-        .titulo {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-
-        .subtitulo {
-            margin: 5px 0 0 0;
-            font-weight: 300;
-        }
-        
-        /********** GRID DE PROYECTOS **********/
-        .grid {
-            padding: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /********** TARJETAS **********/
-        .card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform .2s, box-shadow .2s;
-            overflow: hidden; 
-            /* Para forzar el botón al final y centrarlo, usamos flex */
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .card h3 {
-            margin-top: 15px;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: #555;
-            flex-grow: 1; /* Permite que el párrafo ocupe el espacio antes del botón */
-        }
-
-        /* Contenedor de acciones centrado */
-        .card-actions {
-            display: flex;
-            justify-content: center; /* Centra el contenido horizontalmente */
-            gap: 10px;
-            margin-top: 15px; /* Espacio extra sobre el footer de la tarjeta */
-        }
-        
-        /* Estilo específico para el botón simple centrado */
-        .card-actions.single-button a.boton {
-            flex-grow: 0; /* Deshabilita el grow para que no ocupe todo el ancho */
-            width: auto;
-            min-width: 180px; /* Ancho mínimo para que se vea bien */
-        }
-        
-        .boton {
-            text-align: center;
-            padding: 10px 15px;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 8px;
-            transition: background .2s;
-            cursor: pointer; 
-            border: none;
-            box-sizing: border-box;
-            text-decoration: none; 
-            display: inline-block;
-        }
-
-        .boton:hover {
-            background: var(--secondary-color);
-        }
-
-        /********** ESTILOS ESPECÍFICOS DEL CANVAS **********/
-        #relojCanvas {
-            max-width: 100%;
-            height: auto;
-            width: 100%; 
-            border: 5px solid #000;
-            border-radius: 50%; 
-            box-sizing: border-box;
-        }
-        
-        /********** ESTILOS DEL MODAL (DIALOG) **********/
-        dialog {
-            border: none;
-            padding: 0;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 90vw;
-            width: 800px;
-            max-height: 90vh;
-            overflow: hidden;
-        }
-
-        dialog::backdrop {
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .modal-close-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .modal-content {
-            padding: 10px;
-            max-height: calc(90vh - 70px);
-            overflow-y: auto;
-            background: var(--code-bg);
-        }
-        
-        pre {
-            margin: 0;
-            padding: 10px;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: var(--code-text);
-            overflow-x: auto;
-        }
-        
-        /********** FOOTER **********/
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background: var(--text-dark);
-            color: var(--text-light);
-            margin-top: 40px;
-        }
-    </style>
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
-
 <body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
 
-<header class="header">
-    <h1 class="titulo">Alfredo Martínez Cantero</h1>
-    <h2 class="subtitulo">Portafolio Web</h2>
-</header>
+  <header class="topbar">
+    <nav class="container nav" aria-label="Principal">
+      <a class="brand" href="./">AMC</a>
+      <button id="toggleTheme" class="icon-btn" aria-label="Cambiar tema">🌙</button>
+      <ul class="menu">
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main class="grid">
-    
-    <article class="card">
-        <canvas id="relojCanvas" width="512" height="512"></canvas>
-        <h3>Reloj Analógico Dinámico (Canvas API)</h3>
-        <p>Implementación de un reloj que utiliza la API de Canvas para el dibujo y <code>requestAnimationFrame</code> para la animación fluida y eficiente.</p>
-        <div class="card-actions">
-            <button id="open-clock-code" class="boton">Ver Código</button>
+  <main id="contenido">
+    <!-- HERO -->
+    <section id="inicio" class="hero container">
+      <div class="hero-text">
+        <h1>Alfredo Martínez Cantero</h1>
+        <p class="lead">Desarrollador en formación (DAM). Me apasiona el <strong>backend</strong>, las <strong>bases de datos</strong> y la <strong>IA</strong>, creando soluciones de principio a fin.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#proyectos">Ver proyectos</a>
+          <a class="btn ghost" href="#contacto">Contactar</a>
         </div>
-    </article>
-    
-    <article class="card">
-        <img src="npcs.png" alt="Previsualización de la Simulación de NPC's"> 
-        <h3>Simulación de NPC's (Flask + Python)</h3>
-        <p>Modelo de comportamiento de NPC's con lógica de rebote y movimiento errático. La demo y el código se encuentran en LinkedIn.</p>
-        
-        <div class="card-actions single-button">
-            <a href="https://www.linkedin.com/posts/alfredomart%C3%ADnez_ya-hace-3-meses-que-empec%C3%A9-a-estudiar-desarrollo-activity-7400521730491842560-QLwG?utm_source=share&utm_medium=member_desktop&rcm=ACoAADwclm4B0Gm9BtORsl-Y1IhaHmIl_719QlY" 
-                class="boton" 
-                target="_blank" 
-                rel="noopener noreferrer">
-                Ver Proyecto y Código
-            </a>
+      </div>
+      <picture class="hero-media">
+        <img src="./assets/img/Foto carné.png" alt="Foto de Alfredo Martínez Cantero" onerror="this.style.display='none'">
+      </picture>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="container section">
+      <h2>Competencias</h2>
+      <div class="chips" role="list" aria-label="Tecnologías">
+        <span class="chip" role="listitem">Python</span>
+        <span class="chip" role="listitem">JavaScript</span>
+        <span class="chip" role="listitem">PHP</span>
+        <span class="chip" role="listitem">SQL (MySQL, SQLite)</span>
+        <span class="chip" role="listitem">MongoDB</span>
+        <span class="chip" role="listitem">Flask</span>
+        <span class="chip" role="listitem">HTML/CSS</span>
+        <span class="chip" role="listitem">Canvas/SVG</span>
+        <span class="chip" role="listitem">IA (embeddings/LLMs)</span>
+        <span class="chip" role="listitem">Git/GitHub</span>
+      </div>
+    </section>
+
+    <!-- PROYECTOS (se rellenan desde el js) -->
+    <section id="proyectos" class="container section">
+      <div class="section-head">
+        <h2>Proyectos</h2>
+        <div class="filters" role="tablist" aria-label="Filtrar proyectos">
+          <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">Todos</button>
+          <button class="filter" data-filter="frontend" role="tab">Frontend</button>
+          <button class="filter" data-filter="backend" role="tab">Backend</button>
+          <button class="filter" data-filter="bbdd" role="tab">BBDD</button>
+          <button class="filter" data-filter="ia" role="tab">IA</button>
+          <button class="filter" data-filter="otros" role="tab">Varios</button>
         </div>
-    </article>
+      </div>
 
-    <article class="card">
-        <img src="foto cv.png" alt="Imagen del proyecto">
-        <h3>Título del proyecto 3</h3>
-        <p>Párrafo con una descripción del proyecto.</p>
-        <div class="card-actions">
-            <a href="otrapagina.html" class="boton">Saber más</a>
+      <div id="gridProyectos" class="grid" aria-live="polite" aria-busy="false">
+        <!-- Tarjetas inyectadas dinámicamente -->
+      </div>
+    </section>
+
+    <!-- SOBRE MI -->
+    <section id="sobre-mi" class="container section">
+      <h2>Sobre mí</h2>
+      <p>Soy estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM). Me centro en resolver problemas con <strong>Python</strong>, <strong>SQL</strong> y <strong>Flask/PHP</strong>, apoyándome en <strong>JavaScript</strong> para interfaces dinámicas (Canvas/SVG). Disfruto modelando datos (ER → Relacional, vistas, índices, FKs) e integrando <strong>IA</strong> (embeddings/Chroma, chatbots, automatización de texto).</p>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="container section">
+      <h2>Contacto</h2>
+      <div class="contact">
+        <a class="btn" href="mailto:alfredomartinezcantero@gmail.com">Enviar email</a>
+        <div class="links">
+          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
         </div>
-    </article>
-
-    <article class="card">
-        <img src="foto cv.png" alt="Imagen del proyecto">
-        <h3>Título del proyecto 4</h3>
-        <p>Párrafo con una descripción del proyecto.</p>
-        <div class="card-actions">
-            <a href="otrapagina.html" class="boton">Saber más</a>
+        <div class="muted" style="margin-top:.5rem;">
+          <span>alfredomartinezcantero@gmail.com</span>
+          <span> — </span>
+          <span>+34 653 358 447</span>
         </div>
-    </article>
+      </div>
+    </section>
+  </main>
 
-</main>
+  <footer class="container footer">
+    <span id="year"></span> Alfredo Martínez Cantero — Valencia</small>
+  </footer>
 
-<footer class="footer">
-    <p>alfredomartinezcantero@gmail.com — +34 653 358 447</p>
-</footer>
-
-<dialog id="code-modal">
-    <div class="modal-header">
-        <h2>Código JavaScript del Reloj</h2>
-        <button id="close-modal" class="modal-close-btn">&times;</button>
-    </div>
-    <div class="modal-content">
-        <pre id="clock-code-content"></pre>
-    </div>
-</dialog>
-
-<script id="main-scripts">
-    
-    (function() {
-        
-        // --- 1. Lógica del Reloj de Canvas ---
-        
-        const initClock = () => {
-            const canvas = document.getElementById("relojCanvas");
-            if (!canvas || !canvas.getContext) return; // Validación de entorno
-
-            const ctx = canvas.getContext("2d");
-            ctx.lineCap = "round";
-            const SIZE = canvas.width;
-            const CENTER = SIZE / 2;
-            const TAU = 2 * Math.PI; // 360 grados en radianes
-            const HOUR_LENGTH = 80;  
-            const MINUTE_LENGTH = 130; 
-            const SECOND_LENGTH = 180;
-            const OUTER_RING_RADIUS = 200;
-
-            function drawClock() {
-                try {
-                    const now = new Date();
-                    const hour = now.getHours() % 12; 
-                    const minute = now.getMinutes();
-                    const second = now.getSeconds();
-                    const ms = now.getMilliseconds();
-                    
-                    // 1. Limpiar Canvas y dibujar el anillo exterior
-                    ctx.clearRect(0, 0, SIZE, SIZE);
-                    ctx.lineWidth = 25; ctx.strokeStyle = "black";
-                    ctx.beginPath(); ctx.arc(CENTER, CENTER, OUTER_RING_RADIUS, 0, TAU); ctx.stroke();
-                    
-                    // 2. Cálculo y Dibujo de la Aguja de Horas
-                    const hourFraction = (minute / 60) + (second / 3600) + (ms / 3600000);
-                    const angleHour = (hour + hourFraction) * (TAU / 12) - (TAU / 4); // - (TAU / 4) ajusta el inicio a las 12
-                    ctx.lineWidth = 20; ctx.strokeStyle = "blue";
-                    ctx.beginPath(); ctx.moveTo(CENTER, CENTER);
-                    ctx.lineTo(CENTER + Math.cos(angleHour) * HOUR_LENGTH, CENTER + Math.sin(angleHour) * HOUR_LENGTH);
-                    ctx.stroke();
-
-                    // 3. Cálculo y Dibujo de la Aguja de Minutos
-                    const minuteFraction = (second / 60) + (ms / 60000);
-                    const angleMinute = (minute + minuteFraction) * (TAU / 60) - (TAU / 4);
-                    ctx.lineWidth = 15; ctx.strokeStyle = "green";
-                    ctx.beginPath(); ctx.moveTo(CENTER, CENTER);
-                    ctx.lineTo(CENTER + Math.cos(angleMinute) * MINUTE_LENGTH, CENTER + Math.sin(angleMinute) * MINUTE_LENGTH);
-                    ctx.stroke();
-
-                    // 4. Cálculo y Dibujo de la Aguja de Segundos
-                    // El ángulo incluye la contribución de los milisegundos.
-                    const secondFraction = (ms / 1000);
-                    const angleSecond = (second + secondFraction) * (TAU / 60) - (TAU / 4);
-                    ctx.lineWidth = 5; ctx.strokeStyle = "red";
-                    ctx.beginPath(); ctx.moveTo(CENTER, CENTER);
-                    ctx.lineTo(CENTER + Math.cos(angleSecond) * SECOND_LENGTH, CENTER + Math.sin(angleSecond) * SECOND_LENGTH);
-                    ctx.stroke();
-
-                    // 5. Círculo central
-                    ctx.fillStyle = "black"; ctx.beginPath(); ctx.arc(CENTER, CENTER, 10, 0, TAU); ctx.fill();
-
-                    requestAnimationFrame(drawClock);
-
-                } catch (error) {
-                    // Manejo de errores de Canvas, aunque inusual, es buena práctica.
-                    console.error("Error en la función drawClock:", error);
-                }
-            }
-
-            // Iniciar el bucle de animación
-            requestAnimationFrame(drawClock);
-        };
-        
-        const initModal = () => {
-            const modal = document.getElementById('code-modal');
-            const openBtn = document.getElementById('open-clock-code');
-            const closeBtn = document.getElementById('close-modal');
-            const codeContent = document.getElementById('clock-code-content');
-            
-            const scriptElement = document.getElementById('main-scripts');
-            if (!scriptElement) {
-                console.error("Elemento de script 'main-scripts' no encontrado.");
-                return;
-            }
-            
-            const fullScriptContent = scriptElement.textContent.trim().replace(/^\s*\/\*\*[\s\S]*?\*\/\s*/, '');
-            
-            codeContent.textContent = fullScriptContent;
-            
-            if(openBtn) {
-                openBtn.addEventListener('click', () => {
-                    const clockCode = fullScriptContent
-                        .split('// --- 2. Lógica del Modal')[0] // Trunca antes de la lógica del modal
-                        .trim() + '\n\n// ... (Lógica del Modal sigue después) ...';
-                    codeContent.textContent = clockCode;
-
-                    modal.showModal();
-                });
-            }
-            
-            if(closeBtn) closeBtn.addEventListener('click', () => modal.close());
-        };
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            initClock();
-            initModal();
-        });
-
-    })();
-</script>
-
+  <!-- Scripts -->
+  <script src="./assets/js/app.js"></script>
 </body>
 </html>
