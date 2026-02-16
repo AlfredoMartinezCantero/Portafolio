@@ -120,7 +120,7 @@
       titulo: 'Proyecto 4',
       descripcion: 'Añadir ejercicio chatbot',
       stack: ['En preparación'],
-      categoria: 'otros',
+      categoria: 'ia',
       img: './assets/img/proyectos/prox.jpg',
       demo: './otrapagina.html',
       code: '#'
