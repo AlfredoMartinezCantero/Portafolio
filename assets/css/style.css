@@ -73,7 +73,7 @@ a:hover { text-decoration: underline; }
 .btn.ghost { background: transparent; color: var(--brand); border: 1px solid var(--brand); }
 
 .hero-media img {
-  width: 100%; height: auto; border-radius: 1rem;
+  width: 50%; height: auto; border-radius: 1rem;
   border: 1px solid var(--border);
 }
 
