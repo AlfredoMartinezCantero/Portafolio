@@ -1,27 +1,54 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Portafolio — Alfredo Martínez Cantero</title>
-  <meta name="description" content="Portafolio de proyectos (Python, JS, PHP, SQL, IA) de Alfredo Martínez Cantero." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alfredo Martínez Cantero — Desarrollador de Software</title>
+  <meta name="description" content="Portafolio de Alfredo Martínez Cantero. Proyectos en Python, JavaScript, PHP, SQL e IA." />
+  <meta name="author" content="Alfredo Martínez Cantero" />
 
-  <!-- Fuentes -->
+  <!-- Open Graph -->
+  <meta property="og:title" content="Alfredo Martínez Cantero — Desarrollador de Software" />
+  <meta property="og:description" content="Proyectos en Python, JavaScript, PHP, SQL e IA." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fuentes: Syne (display) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
 
-  <!-- Estilos -->
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
-  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <!-- Accesibilidad: saltar al contenido -->
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
 
-  <header class="topbar">
-    <nav class="container nav" aria-label="Principal">
-      <a class="brand" href="./">AMC</a>
-      <button id="toggleTheme" class="icon-btn" aria-label="Cambiar tema">🌙</button>
-      <ul class="menu">
+  <!-- HEADER -->
+  <header class="topbar" role="banner">
+    <nav class="container nav" aria-label="Navegación principal">
+      <a class="brand" href="./" aria-label="Inicio — Alfredo Martínez Cantero">AMC</a>
+
+      <ul class="menu" role="list">
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="toggleTheme" class="icon-btn" aria-label="Cambiar tema de color" title="Alternar tema">
+          <span class="theme-icon" aria-hidden="true">🌙</span>
+        </button>
+        <!-- Hamburger móvil -->
+        <button id="menuToggle" class="icon-btn hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Menú móvil -->
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Menú móvil" hidden>
+      <ul role="list">
         <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#sobre-mi">Sobre mí</a></li>
@@ -30,91 +57,126 @@
     </nav>
   </header>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <main id="contenido">
+
     <!-- HERO -->
-    <section id="inicio" class="hero container">
-      <div class="hero-text">
-        <h1>Alfredo Martínez Cantero</h1>
-    <!-- SOBRE MI -->
-    <section id="sobre-mi" class="container section">
-      <h2>Sobre mí</h2>
-      <p>Soy estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM). Me centro en resolver problemas con <strong>Python</strong>, <strong>SQL</strong> y <strong>Flask/PHP</strong>, apoyándome en <strong>JavaScript</strong> para interfaces dinámicas (Canvas/SVG). Disfruto modelando datos (ER → Relacional, vistas, índices, FKs) e integrando <strong>IA</strong> (embeddings/Chroma, chatbots, automatización de texto).</p>
+    <section id="inicio" class="hero" aria-labelledby="hero-heading">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="hero-eyebrow">Estudiante DAM · Valencia</p>
+          <h1 id="hero-heading">Alfredo Martínez<br><span class="accent">Cantero</span></h1>
+          <p class="lead">Desarrollo aplicaciones con <strong>Python</strong>, <strong>SQL</strong> y <strong>Flask / PHP</strong>, interfaces dinámicas con <strong>JavaScript</strong> (Canvas / SVG) e integro capacidades de <strong>IA</strong>.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
+            <a class="btn btn-ghost" href="#contacto">Contactar</a>
+          </div>
+        </div>
+
+        <figure class="hero-media" aria-hidden="true">
+          <img
+            src="./assets/img/Foto carné.png"
+            alt="Foto de Alfredo Martínez Cantero"
+            width="280" height="280"
+            loading="eager"
+            onerror="this.closest('figure').style.display='none'"
+          />
+        </figure>
+      </div>
     </section>
-        <div class="hero-cta">
-          <a class="btn" href="#proyectos">Ver proyectos</a>
-          <a class="btn ghost" href="#contacto">Contactar</a>
+
+    <!-- SOBRE MÍ -->
+    <section id="sobre-mi" class="section" aria-labelledby="sobre-heading">
+      <div class="container">
+        <h2 id="sobre-heading">Sobre mí</h2>
+        <div class="about-card">
+          <p>Soy estudiante de <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong>. Me centro en resolver problemas con <strong>Python</strong>, <strong>SQL</strong> y <strong>Flask / PHP</strong>, apoyándome en <strong>JavaScript</strong> para interfaces dinámicas con Canvas y SVG.</p>
+          <p>Disfruto modelando datos (ER → Relacional, vistas, índices, FKs)
         </div>
       </div>
-      <picture class="hero-media">
-        <img src="./assets/img/Foto carné.png" alt="Foto de Alfredo Martínez Cantero" onerror="this.style.display='none'">
-      </picture>
     </section>
 
     <!-- SKILLS -->
-    <section id="skills" class="container section">
-      <h2>Competencias</h2>
-      <div class="chips" role="list" aria-label="Tecnologías">
-        <span class="chip" role="listitem">Python</span>
-        <span class="chip" role="listitem">JavaScript</span>
-        <span class="chip" role="listitem">PHP</span>
-        <span class="chip" role="listitem">SQL (MySQL, SQLite)</span>
-        <span class="chip" role="listitem">MongoDB</span>
-        <span class="chip" role="listitem">Flask</span>
-        <span class="chip" role="listitem">HTML/CSS</span>
-        <span class="chip" role="listitem">Canvas/SVG</span>
-        <span class="chip" role="listitem">IA (embeddings/LLMs)</span>
-        <span class="chip" role="listitem">Git/GitHub</span>
+    <section id="skills" class="section" aria-labelledby="skills-heading">
+      <div class="container">
+        <h2 id="skills-heading">Competencias</h2>
+        <ul class="chips" role="list" aria-label="Tecnologías y herramientas">
+          <li class="chip" role="listitem">Python</li>
+          <li class="chip" role="listitem">JavaScript</li>
+          <li class="chip" role="listitem">PHP</li>
+          <li class="chip" role="listitem">SQL (MySQL · SQLite)</li>
+          <li class="chip" role="listitem">MongoDB</li>
+          <li class="chip" role="listitem">Flask</li>
+          <li class="chip" role="listitem">HTML / CSS</li>
+          <li class="chip" role="listitem">Canvas / SVG</li>
+          <li class="chip" role="listitem">IA (embeddings · LLMs)</li>
+          <li class="chip" role="listitem">Git / GitHub</li>
+        </ul>
       </div>
     </section>
 
-    <!-- PROYECTOS (se rellenan desde el js) -->
-    <section id="proyectos" class="container section">
-      <div class="section-head">
-        <h2>Proyectos</h2>
-        <div class="filters" role="tablist" aria-label="Filtrar proyectos">
-          <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">Todos</button>
-          <button class="filter" data-filter="frontend" role="tab">Frontend</button>
-          <button class="filter" data-filter="backend" role="tab">Backend</button>
-          <button class="filter" data-filter="bbdd" role="tab">BBDD</button>
-          <button class="filter" data-filter="ia" role="tab">IA</button>
-          <button class="filter" data-filter="otros" role="tab">Varios</button>
+    <!-- PROYECTOS -->
+    <section id="proyectos" class="section" aria-labelledby="proyectos-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="proyectos-heading">Proyectos</h2>
+          <div class="filters" role="tablist" aria-label="Filtrar proyectos por categoría">
+            <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">Todos</button>
+            <button class="filter" data-filter="frontend" role="tab" aria-selected="false">Frontend</button>
+            <button class="filter" data-filter="backend" role="tab" aria-selected="false">Backend</button>
+            <button class="filter" data-filter="bbdd" role="tab" aria-selected="false">BBDD</button>
+            <button class="filter" data-filter="ia" role="tab" aria-selected="false">IA</button>
+            <button class="filter" data-filter="fullstack" role="tab" aria-selected="false">Full Stack</button>
+            <button class="filter" data-filter="otros" role="tab" aria-selected="false">Varios</button>
+          </div>
+        </div>
+
+        <div id="gridProyectos" class="grid" aria-live="polite" aria-busy="false" aria-label="Lista de proyectos">
+          <!-- Tarjetas inyectadas dinámicamente por app.js -->
         </div>
       </div>
+    </section>
 
-      <div id="gridProyectos" class="grid" aria-live="polite" aria-busy="false">
-        <!-- Tarjetas inyectadas dinámicamente -->
+    <!-- CONTACTO -->
+    <section id="contacto" class="section" aria-labelledby="contacto-heading">
+      <div class="container">
+        <h2 id="contacto-heading">Contacto</h2>
+        <div class="contact-card">
+          <p class="lead">¿Tienes un proyecto en mente o quieres conocer más sobre mi trabajo?</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary"
+               href="https://mail.google.com/mail/?view=cm&fs=1&to=alfredomartinezcantero@gmail.com&su=Contacto%20desde%20tu%20portafolio"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Enviar correo a Alfredo (abre Gmail)">
+              ✉ Enviar email
+            </a>
+            <a class="btn btn-ghost"
+               href="https://www.linkedin.com/in/alfredomart%C3%ADnez/"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Perfil de LinkedIn de Alfredo">
+              LinkedIn
+            </a>
+            <a class="btn btn-ghost"
+               href="https://github.com/AlfredoMartinezCantero/"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Perfil de GitHub de Alfredo">
+              GitHub
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
-<!-- CONTACTO -->
-<section id="contacto" class="container section">
-  <h2>Contacto</h2>
-  <div class="contact">
-    <div class="actions">
-      <a class="btn"
-         href="https://mail.google.com/mail/?view=cm&fs=1&to=alfredomartinezcantero@gmail.com&su=Contacto%20desde%20tu%20portafolio"
-         target="_blank" rel="noopener">
-        Enviar email
-      </a>
-    </div>
-
-    <div class="links">
-      <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </div>
-
-    <div class="muted" style="margin-top:.5rem;">
-
-    </div>
-  </div>
-</section>
   </main>
 
-  <footer class="container footer">
-    <span id="year"></span>— Valencia</small>
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <span class="footer-brand">AMC</span>
+      <small>© <span id="year"></span> Alfredo Martínez Cantero — Valencia</small>
+    </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="./assets/js/app.js"></script>
 </body>
 </html>

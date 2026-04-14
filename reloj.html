@@ -3,143 +3,175 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reloj Analógico (Canvas) — AMC</title>
+  <title>Reloj Analógico — Alfredo Martínez Cantero</title>
+  <meta name="description" content="Reloj analógico dibujado con Canvas API y requestAnimationFrame." />
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      background: linear-gradient(135deg,#d0d4db,#b8bec7);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      justify-content: center;
+      gap: 1.5rem;
+      background: linear-gradient(135deg, #1a1f2e 0%, #0d1018 100%);
+      font-family: system-ui, sans-serif;
     }
+
     canvas {
-      background: radial-gradient(circle at center, #ffffff 70%, #e5e5e5 100%);
       border-radius: 50%;
-      border: 10px solid #222;
       box-shadow:
-        0 0 25px rgba(0,0,0,0.3),
-        inset 0 0 18px rgba(0,0,0,0.18);
+        0 0 0 8px rgba(255,255,255,.04),
+        0 0 0 10px rgba(255,255,255,.02),
+        0 20px 60px rgba(0,0,0,.7);
     }
-    /* botón para volver al portfolio */
-    .back {
-      position: fixed; top: 12px; left: 12px;
-      background: rgba(0,0,0,.65); color: #fff; text-decoration: none;
-      padding: .5rem .75rem; border-radius: .5rem; font-weight: 600;
+
+    .back-link {
+      color: rgba(255,255,255,.45);
+      text-decoration: none;
+      font-size: .82rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: color 200ms ease;
     }
-    .back:hover { background: rgba(0,0,0,.8); }
+    .back-link:hover { color: rgba(255,255,255,.8); }
   </style>
 </head>
 <body>
-  <a class="back" href="./">← Volver al portafolio</a>
-  <canvas></canvas>
+  <canvas id="clockCanvas" aria-label="Reloj analógico en tiempo real"></canvas>
+  <a class="back-link" href="./">← Volver al portafolio</a>
 
   <script>
-    // Inicialización
-    let temporizador = setTimeout("bucle()",1000);
-    let lienzo = document.querySelector("canvas");
-    lienzo.width = 512;
-    lienzo.height = 512;
-    let ctx = lienzo.getContext("2d");
-    ctx.lineCap = "round";
+    'use strict';
 
-    function dibujarNumeros() {
-      ctx.fillStyle = "#000";
-      ctx.font = "bold 34px Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+    const canvas = document.getElementById('clockCanvas');
+    const ctx    = canvas.getContext('2d');
+
+    // Tamaño responsivo
+    const SIZE = Math.min(window.innerWidth, window.innerHeight, 480) - 32;
+    canvas.width  = SIZE;
+    canvas.height = SIZE;
+    const R = SIZE / 2;      // radio del canvas
+    const CR = R * 0.88;     // radio del círculo del reloj
+
+    ctx.lineCap = 'round';
+
+    /** Dibuja los números 1-12 */
+    const drawNumbers = () => {
+      ctx.fillStyle   = '#1a1a2e';
+      ctx.font        = `bold ${R * 0.13}px system-ui, sans-serif`;
+      ctx.textAlign   = 'center';
+      ctx.textBaseline = 'middle';
 
       for (let n = 1; n <= 12; n++) {
-        let ang = (n * Math.PI / 6) - Math.PI/2;
-        // Números más hacia adentro
-        let x = 256 + Math.cos(ang) * 145;
-        let y = 256 + Math.sin(ang) * 145;
+        const ang = (n * Math.PI / 6) - Math.PI / 2;
+        const x   = R + Math.cos(ang) * CR * 0.74;
+        const y   = R + Math.sin(ang) * CR * 0.74;
         ctx.fillText(n, x, y);
       }
-    }
+    };
 
-    function dibujarMarcas() {
+    /** Dibuja las marcas de minutos/horas */
+    const drawTicks = () => {
       for (let i = 0; i < 60; i++) {
-        let ang = i * Math.PI / 30;
-        let x1 = 256 + Math.cos(ang) * 190;
-        let y1 = 256 + Math.sin(ang) * 190;
+        const ang    = (i * Math.PI) / 30;
+        const isHour = i % 5 === 0;
+        const outer  = R + Math.cos(ang) * CR;
+        const innerR = isHour ? CR * 0.84 : CR * 0.91;
+        const inner  = R + Math.cos(ang) * innerR;
 
-        // Marcas grandes un poco más hacia adentro
-        let x2 = 256 + Math.cos(ang) * (i % 5 === 0 ? 160 : 180);
-        let y2 = 256 + Math.sin(ang) * (i % 5 === 0 ? 160 : 180);
-
-        ctx.lineWidth = i % 5 === 0 ? 6 : 2;
-        ctx.strokeStyle = "#000";
-
+        ctx.lineWidth   = isHour ? R * 0.025 : R * 0.01;
+        ctx.strokeStyle = isHour ? '#1a1a2e' : 'rgba(26,26,46,.5)';
         ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.moveTo(outer, R + Math.sin(ang) * CR);
+        ctx.lineTo(inner, R + Math.sin(ang) * innerR);
         ctx.stroke();
       }
-    }
+    };
 
-    function bucle(){
-      let fecha = new Date();
-      let hora = fecha.getHours();
-      let minuto = fecha.getMinutes();
-      let segundo = fecha.getSeconds();
-
-      ctx.clearRect(0,0,512,512);
-
-      // Fondo circular
-      let grad = ctx.createRadialGradient(256,256,50,256,256,200);
-      grad.addColorStop(0, "#fff");
-      grad.addColorStop(1, "#e3e3e3");
-      ctx.fillStyle = grad;
+    /**
+     * Dibuja una manecilla.
+     * @param {number} angle  — ángulo en radianes
+     * @param {number} length — longitud relativa a R
+     * @param {number} width  — grosor relativo a R
+     * @param {string} color  — color de la manecilla
+     */
+    const drawHand = (angle, length, width, color) => {
+      const x = R + Math.cos(angle) * length;
+      const y = R + Math.sin(angle) * length;
+      ctx.lineWidth   = width;
+      ctx.strokeStyle = color;
+      ctx.shadowColor = 'rgba(0,0,0,.35)';
+      ctx.shadowBlur  = R * 0.04;
       ctx.beginPath();
-      ctx.arc(256,256,200,0,Math.PI*2);
+      ctx.moveTo(R, R);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    };
+
+    /** Bucle principal — llamado por requestAnimationFrame */
+    const draw = () => {
+      const now = new Date();
+      const h   = now.getHours() % 12;
+      const m   = now.getMinutes();
+      const s   = now.getSeconds();
+      const ms  = now.getMilliseconds();
+
+      // Fondo del canvas
+      ctx.clearRect(0, 0, SIZE, SIZE);
+
+      // Cara del reloj — gradiente radial
+      const face = ctx.createRadialGradient(R, R * 0.9, R * 0.1, R, R, CR);
+      face.addColorStop(0, '#f5f7ff');
+      face.addColorStop(1, '#dce2f0');
+      ctx.fillStyle = face;
+      ctx.beginPath();
+      ctx.arc(R, R, CR, 0, Math.PI * 2);
       ctx.fill();
 
-      dibujarMarcas();
-      dibujarNumeros();
-
-      // Aguja de horas
-      ctx.lineWidth = 18;
-      ctx.strokeStyle = "#222";
-      ctx.shadowColor = "rgba(0,0,0,0.4)";
-      ctx.shadowBlur = 10;
-      let angH = (hora%12)*(Math.PI*2/12)+(minuto/60)*(Math.PI*2/12)-Math.PI/2;
+      // Sombra interior sutil
+      const inner = ctx.createRadialGradient(R, R, CR * 0.7, R, R, CR);
+      inner.addColorStop(0, 'transparent');
+      inner.addColorStop(1, 'rgba(0,0,0,.08)');
+      ctx.fillStyle = inner;
       ctx.beginPath();
-      ctx.moveTo(256,256);
-      ctx.lineTo(256+Math.cos(angH)*95, 256+Math.sin(angH)*95);
-      ctx.stroke();
-
-      // Aguja de minutos
-      ctx.lineWidth = 10;
-      ctx.strokeStyle = "#333";
-      let angM = minuto*(Math.PI*2/60)-Math.PI/2;
-      ctx.beginPath();
-      ctx.moveTo(256,256);
-      ctx.lineTo(256+Math.cos(angM)*145, 256+Math.sin(angM)*145);
-      ctx.stroke();
-
-      // Aguja de segundos (roja)
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = "#CC0000";
-      let angS = segundo*(Math.PI*2/60)-Math.PI/2;
-      ctx.beginPath();
-      ctx.moveTo(256,256);
-      ctx.lineTo(256+Math.cos(angS)*165, 256+Math.sin(angS)*165);
-      ctx.stroke();
-
-      // Centro metálico
-      let grad2 = ctx.createRadialGradient(256,256,5,256,256,35);
-      grad2.addColorStop(0, "#555");
-      grad2.addColorStop(1, "#000");
-      ctx.fillStyle = grad2;
-      ctx.beginPath();
-      ctx.arc(256,256,30,0,Math.PI*2);
+      ctx.arc(R, R, CR, 0, Math.PI * 2);
       ctx.fill();
 
-      clearTimeout(temporizador);
-      temporizador = setTimeout("bucle()",1000);
-    }
+      drawTicks();
+      drawNumbers();
+
+      // Ángulos con interpolación de milisegundos (movimiento continuo)
+      const angS = ((s + ms / 1000) / 60) * Math.PI * 2 - Math.PI / 2;
+      const angM = ((m + s / 60)    / 60) * Math.PI * 2 - Math.PI / 2;
+      const angH = ((h + m / 60)    / 12) * Math.PI * 2 - Math.PI / 2;
+
+      drawHand(angH, CR * 0.52, R * 0.055, '#1a1a2e');
+      drawHand(angM, CR * 0.73, R * 0.038, '#2c3050');
+      drawHand(angS, CR * 0.82, R * 0.015, '#e63946');
+
+      // Centro decorativo
+      const hub = ctx.createRadialGradient(R, R, 1, R, R, R * 0.06);
+      hub.addColorStop(0, '#555');
+      hub.addColorStop(1, '#111');
+      ctx.fillStyle = hub;
+      ctx.beginPath();
+      ctx.arc(R, R, R * 0.045, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Punto rojo del segundero
+      ctx.fillStyle = '#e63946';
+      ctx.beginPath();
+      ctx.arc(R, R, R * 0.022, 0, Math.PI * 2);
+      ctx.fill();
+
+      requestAnimationFrame(draw);
+    };
+
+    requestAnimationFrame(draw);
   </script>
 </body>
 </html>
