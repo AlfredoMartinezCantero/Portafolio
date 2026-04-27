@@ -87,6 +87,16 @@ const PROJECTS = [
     demo:        'https://www.linkedin.com/feed/update/urn:li:activity:7447660647817003008/?originTrackingId=e5nToS94RDz2ox8Wffkx5A%3D%3D',
     code:        null,
   },
+  {
+    id:          'sistema-facturacion-erp',
+    titulo:      'Sistema de Facturación / Mini‑ERP',
+    descripcion: 'Aplicación web desarrollada en PHP nativo y MySQL para la gestión completa de facturación: usuarios con roles, clientes, productos/servicios, presupuestos con líneas, conversión a facturas, registro de pagos parciales, generación de PDF, envío por email y dashboard con métricas y gráficos (arquitectura MVC, PDO, CSRF).',
+    stack:       ['PHP 8', 'MySQL/MariaDB', 'PDO', 'HTML', 'CSS', 'JavaScript', 'Chart.js', 'Dompdf', 'PHPMailer'],
+    categoria:   'fullstack',
+    img:         './assets/img/proyectos/foto factura.jpg',
+    demo:        'https://www.linkedin.com/feed/update/urn:li:ugcPost:7454487669394477056/',
+    code:        null,
+  },
 ];
 
 /* 5. RENDER DE TARJETAS  */
