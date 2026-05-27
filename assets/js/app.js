@@ -97,6 +97,16 @@ const PROJECTS = [
     demo:        'https://www.linkedin.com/feed/update/urn:li:ugcPost:7454487669394477056/',
     code:        null,
   },
+  {
+    id:          'copilot-ventas-ia',
+    titulo:      'AI Sales Copilot',
+    descripcion: 'Asistente inteligente de ventas integrado con Chatwoot. Analiza mensajes entrantes y genera notas privadas automáticas con análisis de sentimiento, clasificación de lead, resumen del mensaje, intención detectada, próximas acciones recomendadas y borrador de respuesta. LLM local con Ollama, sin datos fuera de la empresa.',
+    stack:       ['Python', 'FastAPI', 'Ollama', 'LLM', 'Chatwoot API'],
+    categoria:   'ia',
+    img:         './assets/img/proyectos/ChatWoot.jpg',
+    demo:        'https://www.linkedin.com/feed/update/urn:li:activity:7465399617950773248/',
+    code:        null,
+  },
 ];
 
 /* 5. RENDER DE TARJETAS  */
