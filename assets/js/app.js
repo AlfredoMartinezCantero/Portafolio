@@ -98,6 +98,16 @@ const PROJECTS = [
     code:        null,
   },
   {
+    id:          'discord-marketing-bot',
+    titulo:      'Bot de Discord — Post de Marketing con IA',
+    descripcion: 'Bot que convierte cualquier texto en un post de marketing completo (imagen con branding + copy) en menos de 60 segundos. Stack 100 % local y sin costes cloud: GPT vía Hermes genera el copy y el prompt visual, ComfyUI + SDXL renderiza la imagen en la GPU (AMD RX 7900 XTX / ROCm), Ollama + Qwen2.5 14B clasifica los mensajes y Python + FastAPI + PIL orquestan el flujo y estampan la identidad visual corporativa. Todo empaquetado en Docker.',
+    stack:       ['Python', 'FastAPI', 'PIL', 'Docker', 'ComfyUI', 'SDXL', 'Ollama', 'Qwen2.5 14B', 'Discord API'],
+    categoria:   'ia',
+    img:         './assets/img/proyectos/discord-bot.jpg',
+    demo:        'https://www.linkedin.com/feed/update/urn:li:activity:7467532490576998401/',
+    code:        null,
+  },
+  {
     id:          'copilot-ventas-ia',
     titulo:      'AI Sales Copilot',
     descripcion: 'Asistente inteligente de ventas integrado con Chatwoot. Analiza mensajes entrantes y genera notas privadas automáticas con análisis de sentimiento, clasificación de lead, resumen del mensaje, intención detectada, próximas acciones recomendadas y borrador de respuesta. LLM local con Ollama, sin datos fuera de la empresa.',
