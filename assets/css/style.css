@@ -467,6 +467,11 @@ strong { font-weight: 600; }
   font-size: .85rem;
 }
 
+.card[data-project="gastos-simples"] .card-thumb {
+  object-fit: contain;
+  background: #14312c;
+}
+
 .card-body {
   padding: 1.1rem 1.2rem .8rem;
 }

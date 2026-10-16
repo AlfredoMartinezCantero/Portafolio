@@ -48,6 +48,16 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 /* 4. DATOS DE PROYECTOS  */
 const PROJECTS = [
   {
+    id:          'gastos-simples',
+    titulo:      'Gastos simples — Finanzas personales',
+    descripcion: 'Aplicación de finanzas personales en PHP 8.2 con SQLite o MySQL/MariaDB. Permite gestionar gastos e ingresos, consultar el balance, filtrar movimientos y ver gráficos por categoría o día. Importación CSV con vista previa, validación y control de duplicados, exportación de movimientos y administración de usuarios con roles. Interfaz adaptable en verde oscuro y lima, con autenticación, PDO y protección CSRF.',
+    stack:       ['PHP 8.2', 'SQLite', 'MySQL/MariaDB', 'PDO', 'HTML', 'CSS', 'JavaScript'],
+    categoria:   'fullstack',
+    img:         './assets/img/proyectos/gastos-simples.jpg',
+    demo:        null,
+    code:        'https://github.com/AlfredoMartinezCantero/Mini-proyecto-Gastos-simples-e-importacion-CSV',
+  },
+  {
     id:          'copilot-ventas-ia',
     titulo:      'AI Sales Copilot',
     descripcion: 'Asistente inteligente de ventas integrado con Chatwoot. Analiza mensajes entrantes y genera notas privadas automáticas con análisis de sentimiento, clasificación de lead, resumen del mensaje, intención detectada, próximas acciones recomendadas y borrador de respuesta. LLM local con Ollama, sin datos fuera de la empresa.',
@@ -75,16 +85,6 @@ const PROJECTS = [
     categoria:   'fullstack',
     img:         './assets/img/proyectos/foto factura.jpg',
     demo:        'https://www.linkedin.com/feed/update/urn:li:ugcPost:7454487669394477056/',
-    code:        null,
-  },
-  {
-    id:          'Gastos Simples',
-    titulo:      'Gastos Simples AMC',
-    descripcion: 'App web en PHP + MySQL para gestionar gastos: alta/edición/borrado, filtros por mes/categoría, balance mensual, import/export CSV y gráfico con Chart.js (PDO + CSRF).',
-    stack:       ['PHP 8', 'MySQL/MariaDB', 'PDO', 'HTML', 'CSS', 'JavaScript', 'Chart.js'],
-    categoria:   'fullstack',
-    img:         './assets/img/proyectos/gastos simples.jpg',
-    demo:        'https://www.linkedin.com/feed/update/urn:li:activity:7447660647817003008/?originTrackingId=e5nToS94RDz2ox8Wffkx5A%3D%3D',
     code:        null,
   },
   {
@@ -142,14 +142,14 @@ const cardTemplate = (p) => {
 
   const demoBtn = p.demo
     ? `<a class="btn btn-primary" href="${p.demo}" target="_blank" rel="noopener noreferrer">Ver proyecto</a>`
-    : `<span class="btn btn-ghost" aria-disabled="true" style="pointer-events:none;opacity:.5;">Próximamente</span>`;
+    : p.code ? '' : `<span class="btn btn-ghost" aria-disabled="true" style="pointer-events:none;opacity:.5;">Próximamente</span>`;
 
   const codeBtn = p.code
     ? `<a class="btn btn-ghost" href="${p.code}" target="_blank" rel="noopener noreferrer">Código</a>`
     : '';
 
   return `
-    <article class="card" data-cat="${p.categoria}" aria-label="${p.titulo}">
+    <article class="card" data-project="${p.id}" data-cat="${p.categoria}" aria-label="${p.titulo}">
       ${media}
       <div class="card-body">
         <h3>${p.titulo}</h3>
