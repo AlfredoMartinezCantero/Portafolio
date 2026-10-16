@@ -1,177 +1,33 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reloj Analógico — Alfredo Martínez Cantero</title>
-  <meta name="description" content="Reloj analógico dibujado con Canvas API y requestAnimationFrame." />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      background: linear-gradient(135deg, #1a1f2e 0%, #0d1018 100%);
-      font-family: system-ui, sans-serif;
-    }
-
-    canvas {
-      border-radius: 50%;
-      box-shadow:
-        0 0 0 8px rgba(255,255,255,.04),
-        0 0 0 10px rgba(255,255,255,.02),
-        0 20px 60px rgba(0,0,0,.7);
-    }
-
-    .back-link {
-      color: rgba(255,255,255,.45);
-      text-decoration: none;
-      font-size: .82rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      transition: color 200ms ease;
-    }
-    .back-link:hover { color: rgba(255,255,255,.8); }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#101217">
+  <title>Reloj Analógico Dinámico — Alfredo Martínez Cantero</title>
+  <meta name="description" content="Demo de un reloj analógico en tiempo real con Canvas API y requestAnimationFrame, por Alfredo Martínez Cantero.">
+  <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
+  <script src="./assets/js/theme.js"></script>
+  <link rel="preload" href="./assets/fonts/syne-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/dm-sans-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script type="module" src="./assets/js/clock.js"></script>
 </head>
-<body>
-  <canvas id="clockCanvas" aria-label="Reloj analógico en tiempo real"></canvas>
-  <a class="back-link" href="./">← Volver al portafolio</a>
-
-  <script>
-    'use strict';
-
-    const canvas = document.getElementById('clockCanvas');
-    const ctx    = canvas.getContext('2d');
-
-    // Tamaño responsivo
-    const SIZE = Math.min(window.innerWidth, window.innerHeight, 480) - 32;
-    canvas.width  = SIZE;
-    canvas.height = SIZE;
-    const R = SIZE / 2;      // radio del canvas
-    const CR = R * 0.88;     // radio del círculo del reloj
-
-    ctx.lineCap = 'round';
-
-    /** Dibuja los números 1-12 */
-    const drawNumbers = () => {
-      ctx.fillStyle   = '#1a1a2e';
-      ctx.font        = `bold ${R * 0.13}px system-ui, sans-serif`;
-      ctx.textAlign   = 'center';
-      ctx.textBaseline = 'middle';
-
-      for (let n = 1; n <= 12; n++) {
-        const ang = (n * Math.PI / 6) - Math.PI / 2;
-        const x   = R + Math.cos(ang) * CR * 0.74;
-        const y   = R + Math.sin(ang) * CR * 0.74;
-        ctx.fillText(n, x, y);
-      }
-    };
-
-    /** Dibuja las marcas de minutos/horas */
-    const drawTicks = () => {
-      for (let i = 0; i < 60; i++) {
-        const ang    = (i * Math.PI) / 30;
-        const isHour = i % 5 === 0;
-        const outer  = R + Math.cos(ang) * CR;
-        const innerR = isHour ? CR * 0.84 : CR * 0.91;
-        const inner  = R + Math.cos(ang) * innerR;
-
-        ctx.lineWidth   = isHour ? R * 0.025 : R * 0.01;
-        ctx.strokeStyle = isHour ? '#1a1a2e' : 'rgba(26,26,46,.5)';
-        ctx.beginPath();
-        ctx.moveTo(outer, R + Math.sin(ang) * CR);
-        ctx.lineTo(inner, R + Math.sin(ang) * innerR);
-        ctx.stroke();
-      }
-    };
-
-    /**
-     * Dibuja una manecilla.
-     * @param {number} angle  — ángulo en radianes
-     * @param {number} length — longitud relativa a R
-     * @param {number} width  — grosor relativo a R
-     * @param {string} color  — color de la manecilla
-     */
-    const drawHand = (angle, length, width, color) => {
-      const x = R + Math.cos(angle) * length;
-      const y = R + Math.sin(angle) * length;
-      ctx.lineWidth   = width;
-      ctx.strokeStyle = color;
-      ctx.shadowColor = 'rgba(0,0,0,.35)';
-      ctx.shadowBlur  = R * 0.04;
-      ctx.beginPath();
-      ctx.moveTo(R, R);
-      ctx.lineTo(x, y);
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-    };
-
-    /** Bucle principal — llamado por requestAnimationFrame */
-    const draw = () => {
-      const now = new Date();
-      const h   = now.getHours() % 12;
-      const m   = now.getMinutes();
-      const s   = now.getSeconds();
-      const ms  = now.getMilliseconds();
-
-      // Fondo del canvas
-      ctx.clearRect(0, 0, SIZE, SIZE);
-
-      // Cara del reloj — gradiente radial
-      const face = ctx.createRadialGradient(R, R * 0.9, R * 0.1, R, R, CR);
-      face.addColorStop(0, '#f5f7ff');
-      face.addColorStop(1, '#dce2f0');
-      ctx.fillStyle = face;
-      ctx.beginPath();
-      ctx.arc(R, R, CR, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Sombra interior sutil
-      const inner = ctx.createRadialGradient(R, R, CR * 0.7, R, R, CR);
-      inner.addColorStop(0, 'transparent');
-      inner.addColorStop(1, 'rgba(0,0,0,.08)');
-      ctx.fillStyle = inner;
-      ctx.beginPath();
-      ctx.arc(R, R, CR, 0, Math.PI * 2);
-      ctx.fill();
-
-      drawTicks();
-      drawNumbers();
-
-      // Ángulos con interpolación de milisegundos (movimiento continuo)
-      const angS = ((s + ms / 1000) / 60) * Math.PI * 2 - Math.PI / 2;
-      const angM = ((m + s / 60)    / 60) * Math.PI * 2 - Math.PI / 2;
-      const angH = ((h + m / 60)    / 12) * Math.PI * 2 - Math.PI / 2;
-
-      drawHand(angH, CR * 0.52, R * 0.055, '#1a1a2e');
-      drawHand(angM, CR * 0.73, R * 0.038, '#2c3050');
-      drawHand(angS, CR * 0.82, R * 0.015, '#e63946');
-
-      // Centro decorativo
-      const hub = ctx.createRadialGradient(R, R, 1, R, R, R * 0.06);
-      hub.addColorStop(0, '#555');
-      hub.addColorStop(1, '#111');
-      ctx.fillStyle = hub;
-      ctx.beginPath();
-      ctx.arc(R, R, R * 0.045, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Punto rojo del segundero
-      ctx.fillStyle = '#e63946';
-      ctx.beginPath();
-      ctx.arc(R, R, R * 0.022, 0, Math.PI * 2);
-      ctx.fill();
-
-      requestAnimationFrame(draw);
-    };
-
-    requestAnimationFrame(draw);
-  </script>
+<body class="clock-page">
+  <a class="skip-link" href="#contenido">Saltar al reloj</a>
+  <header class="container clock-nav"><a class="brand" href="./" aria-label="amc. — Alfredo Martínez Cantero, volver al portafolio">amc<span class="brand-dot">.</span></a><a class="text-link" href="./#proyectos">← Volver a proyectos</a><button id="toggleTheme" class="icon-btn" type="button" aria-label="Activar tema claro" hidden><svg class="icon theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><svg class="icon theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10 10.1Z"/></svg></button></header>
+  <main id="contenido" class="container clock-main" tabindex="-1">
+    <p class="eyebrow">Experimento / JavaScript + Canvas API</p>
+    <h1>El tiempo, <span class="text-muted">dibujado.</span></h1>
+    <p class="lead">Un reloj analógico en tiempo real. Geometría, gradientes y unas pocas líneas de JavaScript.</p>
+    <div class="clock-stage"><canvas id="clockCanvas" width="430" height="430" aria-label="Reloj analógico; la hora también se muestra como texto a continuación">Tu navegador no admite Canvas. Consulta la hora en el texto inferior.</canvas></div>
+    <time id="clockTime" class="clock-time" aria-live="off"></time>
+    <p id="clockDate" class="clock-date"></p>
+    <p class="eyebrow">Hora local de tu dispositivo</p>
+    <p id="clockNote" class="clock-note"></p>
+    <noscript><p class="clock-note">Activa JavaScript para dibujar el reloj y consultar la hora en tiempo real.</p></noscript>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><small>Alfredo Martínez Cantero · Explorando Canvas</small><a class="back-top" href="./#proyectos">Ver todos los proyectos ↗</a></div></footer>
 </body>
 </html>

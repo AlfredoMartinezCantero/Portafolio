@@ -1,0 +1,6 @@
+# Herramientas e informes de validación locales
+.qa-tools/
+.qa-output/
+node_modules/
+VALIDACION.md
+README.md

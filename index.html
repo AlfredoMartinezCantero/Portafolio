@@ -1,182 +1,157 @@
 <!doctype html>
 <html lang="es" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alfredo Martínez Cantero — Desarrollador de Software</title>
-  <meta name="description" content="Portafolio de Alfredo Martínez Cantero. Proyectos en Python, JavaScript, PHP, SQL e IA." />
-  <meta name="author" content="Alfredo Martínez Cantero" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Alfredo Martínez Cantero — Desarrollador de Software" />
-  <meta property="og:description" content="Proyectos en Python, JavaScript, PHP, SQL e IA." />
-  <meta property="og:type" content="website" />
-
-  <!-- Fuentes: Syne (display) + DM Sans (body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#101217">
+  <title>Alfredo Martínez Cantero — Desarrollador de software</title>
+  <meta name="description" content="Soy Alfredo Martínez Cantero, estudiante de DAM en Valencia. Explora mis proyectos de desarrollo Full Stack, Python, PHP, bases de datos e inteligencia artificial local.">
+  <meta name="author" content="Alfredo Martínez Cantero">
+  <meta property="og:title" content="Alfredo Martínez Cantero — Desarrollo con propósito">
+  <meta property="og:description" content="Aplicaciones, datos e inteligencia artificial. Una selección de mis proyectos como desarrollador de software y estudiante de DAM.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
+  <script src="./assets/js/theme.js"></script>
+  <link rel="preload" href="./assets/fonts/syne-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/dm-sans-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body>
-  <!-- Accesibilidad: saltar al contenido -->
   <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M7 17 17 7M6 7h11v11"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.8 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10 10.1Z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.7m12 5v-3.5a3 3 0 0 0-.8-2.3c2.7-.3 5.6-1.3 5.6-6a4.7 4.7 0 0 0-1.3-3.3 4.3 4.3 0 0 0-.1-3.3S17.3 2.5 15 4.2a11.4 11.4 0 0 0-6 0C6.7 2.5 5.6 2.9 5.6 2.9a4.3 4.3 0 0 0-.1 3.3A4.7 4.7 0 0 0 4.2 9.5c0 4.7 2.9 5.7 5.6 6a3 3 0 0 0-.8 2.3v3.5"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7m0-10v.1M11 17v-7m0 3a3 3 0 0 1 6 0v4"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></symbol>
+    <symbol id="i-window" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 9h20M6 6h.1M10 6h.1"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.1M7 17.5h.1M12 6.5h5M12 17.5h5"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="m14 7 3 3 4-4a6 6 0 0 1-8 8l-7 7a2.1 2.1 0 0 1-3-3l7-7a6 6 0 0 1 8-8Z"/></symbol>
+    <symbol id="i-ai" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4m14-6h4m-4 6h4M9 15V9h6v6Z"/></symbol>
+  </svg>
 
-  <!-- HEADER -->
-  <header class="topbar" role="banner">
+  <header class="topbar">
     <nav class="container nav" aria-label="Navegación principal">
-      <a class="brand" href="./" aria-label="Inicio — Alfredo Martínez Cantero">AMC</a>
-
-      <ul class="menu" role="list">
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#sobre-mi">Sobre mí</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+      <a class="brand" href="#inicio" aria-label="amc. / desarrollo de software — Alfredo Martínez Cantero, inicio">amc<span class="brand-dot">.</span><span class="brand-label">/ desarrollo de software</span></a>
+      <ul class="menu">
+        <li><a href="#proyectos">Proyectos</a></li><li><a href="#skills">Tecnologías</a></li><li><a href="#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a></li>
       </ul>
-
       <div class="nav-actions">
-        <button id="toggleTheme" class="icon-btn" aria-label="Cambiar tema de color" title="Alternar tema">
-          <span class="theme-icon" aria-hidden="true">🌙</span>
-        </button>
-        <!-- Hamburger móvil -->
-        <button id="menuToggle" class="icon-btn hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
-          <span></span><span></span><span></span>
-        </button>
+        <button id="toggleTheme" class="icon-btn" type="button" aria-label="Activar tema claro" hidden><svg class="icon theme-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon theme-moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+        <button id="menuToggle" class="icon-btn hamburger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" hidden><span></span><span></span></button>
       </div>
     </nav>
-
-    <!-- Menú móvil -->
-    <nav id="mobileMenu" class="mobile-menu" aria-label="Menú móvil" hidden>
-      <ul role="list">
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#sobre-mi">Sobre mí</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Navegación móvil" hidden><div class="container"><a href="#proyectos">Proyectos</a><a href="#skills">Tecnologías</a><a href="#sobre-mi">Sobre mí</a><a href="#contacto">Contacto</a></div></nav>
   </header>
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main id="contenido">
-
-    <!-- HERO -->
+  <main id="contenido" tabindex="-1">
     <section id="inicio" class="hero" aria-labelledby="hero-heading">
-      <div class="container hero-inner">
-        <div class="hero-text">
-          <p class="hero-eyebrow">Estudiante DAM · Valencia</p>
-          <h1 id="hero-heading"><br><span class="accent">Alfredo </span>Martínez Cantero</h1>
-          <p class="lead">Desarrollo aplicaciones con <strong>Python</strong>, <strong>SQL</strong> y <strong>Flask / PHP</strong>, interfaces dinámicas con <strong>JavaScript</strong> (Canvas / SVG) e integro capacidades de <strong>IA</strong>.</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
-            <a class="btn btn-ghost" href="#contacto">Contactar</a>
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-text">
+            <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Desarrollo de software · Valencia</p>
+            <h1 id="hero-heading">Alfredo <span>Martínez </span><span class="name-last">Cantero<span class="accent">.</span></span></h1>
+            <p class="hero-role">Código con intención. <br>Soluciones que funcionan.</p>
+            <p class="lead">Estudiante de DAM con enfoque Full Stack. Desarrollo aplicaciones, conecto datos y exploro lo que la inteligencia artificial puede hacer en proyectos reales.</p>
+            <div class="hero-cta"><a class="btn btn-primary" href="#proyectos">Explorar proyectos <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-ghost" href="#contacto">Hablemos <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a></div>
+            <div class="hero-socials">
+              <a class="social-link" href="https://github.com/AlfredoMartinezCantero/" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub <svg class="icon social-arrow" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(nueva pestaña)</span></a>
+              <a class="social-link" href="https://www.linkedin.com/in/alfredomart%C3%ADnez/" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg> LinkedIn <svg class="icon social-arrow" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(nueva pestaña)</span></a>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="visual-label"><span>LA PERSONA DETRÁS DEL CÓDIGO</span><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg></div>
+            <figure class="portrait"><span class="portrait-mark" aria-hidden="true">&lt;/&gt;</span><img src="./assets/img/Foto carné.png" alt="Alfredo Martínez Cantero" width="206" height="212" fetchpriority="high"><figcaption><span>Alfredo Martínez Cantero</span><span>Estudiante DAM <span class="status-dot" aria-hidden="true"></span></span></figcaption></figure>
+            <div class="code-note" role="group" aria-label="Áreas de trabajo: aplicaciones, datos e inteligencia artificial local"><div class="code-note-top"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>enfoque.js</span></div><pre><code><span class="code-purple">const</span> enfoque = {
+  desarrollo: <span class="code-blue">'Full Stack'</span>,
+  herramientas: [<span class="code-blue">'Python'</span>, <span class="code-blue">'PHP'</span>, <span class="code-blue">'JavaScript'</span>, <span class="code-blue">'HTML'</span>, <span class="code-blue">'MySQL'</span>],
+  explorando: <span class="code-blue">'IA'</span>
+};</code></pre></div>
           </div>
         </div>
-
-        <figure class="hero-media" aria-hidden="true">
-          <img
-            src="./assets/img/Foto carné.png"
-            alt="Foto de Alfredo Martínez Cantero"
-            width="280" height="280"
-            loading="eager"
-            onerror="this.closest('figure').style.display='none'"
-          />
-        </figure>
+        <div class="hero-bottom"><p>Aplicaciones <span>/</span> Datos <span>/</span> Inteligencia artificial</p><a href="#proyectos">Descubre mi trabajo <span aria-hidden="true">↓</span></a></div>
       </div>
     </section>
 
-    <!-- SOBRE MÍ -->
-    <section id="sobre-mi" class="section" aria-labelledby="sobre-heading">
+    <section id="proyectos" class="section projects-section" aria-labelledby="proyectos-heading">
       <div class="container">
-        <h2 id="sobre-heading">Sobre mí</h2>
-        <div class="about-card">
-          <p>Soy estudiante de <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong>. Me centro en resolver problemas con <strong>Python</strong>, <strong>SQL</strong> y <strong>Flask / PHP</strong>, apoyándome en <strong>JavaScript</strong> para interfaces dinámicas con Canvas y SVG.</p>
-          <p>Disfruto modelando datos (ER → Relacional, vistas, índices, FKs)
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="section" aria-labelledby="skills-heading">
-      <div class="container">
-        <h2 id="skills-heading">Competencias</h2>
-        <ul class="chips" role="list" aria-label="Tecnologías y herramientas">
-          <li class="chip" role="listitem">Python</li>
-          <li class="chip" role="listitem">JavaScript</li>
-          <li class="chip" role="listitem">PHP</li>
-          <li class="chip" role="listitem">SQL (MySQL · SQLite)</li>
-          <li class="chip" role="listitem">MongoDB</li>
-          <li class="chip" role="listitem">Flask</li>
-          <li class="chip" role="listitem">HTML / CSS</li>
-          <li class="chip" role="listitem">Canvas / SVG</li>
-          <li class="chip" role="listitem">IA (entrenamiento y chatbots simples)</li>
-          <li class="chip" role="listitem">Git / GitHub</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- PROYECTOS -->
-    <section id="proyectos" class="section" aria-labelledby="proyectos-heading">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="proyectos-heading">Proyectos</h2>
-          <div class="filters" role="tablist" aria-label="Filtrar proyectos por categoría">
-            <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">Todos</button>
-            <button class="filter" data-filter="frontend" role="tab" aria-selected="false">Frontend</button>
-            <button class="filter" data-filter="backend" role="tab" aria-selected="false">Backend</button>
-            <button class="filter" data-filter="bbdd" role="tab" aria-selected="false">BBDD</button>
-            <button class="filter" data-filter="ia" role="tab" aria-selected="false">IA</button>
-            <button class="filter" data-filter="fullstack" role="tab" aria-selected="false">Full Stack</button>
-            <button class="filter" data-filter="otros" role="tab" aria-selected="false">Varios</button>
+        <div class="section-head reveal"><div><p class="eyebrow section-kicker"><span>01 /</span> Del código a la práctica</p><h2 id="proyectos-heading">Ideas que se convierten<br>en <span class="text-muted">proyectos.</span></h2></div><p class="section-intro">Aplicaciones web, automatización e IA local. Cada proyecto, una forma de aprender construyendo.</p></div>
+        <div id="projectControls" class="project-controls" hidden>
+          <div id="projectFilters" class="filters" role="group" aria-label="Filtrar proyectos por categoría">
+            <button class="filter" type="button" data-filter="all" aria-pressed="true" aria-controls="gridProyectos">Todos <span class="filter-count">07</span></button>
+            <button class="filter" type="button" data-filter="frontend" aria-pressed="false" aria-controls="gridProyectos">Frontend</button>
+            <button class="filter" type="button" data-filter="backend" aria-pressed="false" aria-controls="gridProyectos">Backend</button>
+            <button class="filter" type="button" data-filter="bbdd" aria-pressed="false" aria-controls="gridProyectos">Bases de datos</button>
+            <button class="filter" type="button" data-filter="ia" aria-pressed="false" aria-controls="gridProyectos">Inteligencia artificial</button>
+            <button class="filter" type="button" data-filter="fullstack" aria-pressed="false" aria-controls="gridProyectos">Full Stack</button>
+            <button class="filter" type="button" data-filter="otros" aria-pressed="false" aria-controls="gridProyectos">Otros</button>
           </div>
+          <label class="search-field"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Buscar proyectos por nombre o tecnología</span><input id="projectSearch" type="search" placeholder="Nombre o tecnología…" autocomplete="off" maxlength="100"></label>
         </div>
+        <div class="results-bar" id="resultsBar" hidden><p id="projectStatus" role="status" aria-live="polite" aria-atomic="true"></p><span>Hechos para resolver. Y para aprender.</span></div>
+        <div id="gridProyectos" class="projects-grid" role="group" aria-label="Proyectos" aria-busy="false"></div>
+        <div id="projectFallback" class="project-fallback"><p>Explora los siete proyectos y sus demostraciones:</p><ul>
+          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7516874488731303936/" target="_blank" rel="noopener noreferrer">Gastos simples — Finanzas personales <span aria-hidden="true">↗</span></a><span>PHP 8.2 · SQLite · MySQL/MariaDB · PDO · HTML · CSS · JavaScript</span></li>
+          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7465399617950773248/" target="_blank" rel="noopener noreferrer">AI Sales Copilot <span aria-hidden="true">↗</span></a><span>Python · FastAPI · Ollama · LLM · Chatwoot API</span></li>
+          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7467532490576998401/" target="_blank" rel="noopener noreferrer">Bot de Discord — Post de Marketing con IA <span aria-hidden="true">↗</span></a><span>Python · FastAPI · PIL · Docker · ComfyUI · SDXL · Ollama · Qwen2.5 14B · Discord API</span></li>
+          <li><a href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7454487669394477056/" target="_blank" rel="noopener noreferrer">Sistema de Facturación / Mini‑ERP <span aria-hidden="true">↗</span></a><span>PHP 8 · MySQL/MariaDB · PDO · HTML · CSS · JavaScript · Chart.js · Dompdf · PHPMailer</span></li>
+          <li><a href="https://www.linkedin.com/posts/alfredomart%C3%ADnez_ya-hace-3-meses-que-empec%C3%A9-a-estudiar-desarrollo-activity-7400521730491842560-QLwG" target="_blank" rel="noopener noreferrer">Simulación de NPC's <span aria-hidden="true">↗</span></a><span>Python · Flask · Canvas</span></li>
+          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7414698829125550080/" target="_blank" rel="noopener noreferrer">Satori — Buscador <span aria-hidden="true">↗</span></a><span>JavaScript · HTML · UI/UX</span></li>
+          <li><a href="./reloj.html">Reloj Analógico Dinámico <span aria-hidden="true">↗</span></a><span>JavaScript · Canvas API · requestAnimationFrame</span></li>
+        </ul></div>
+        <div id="emptyProjects" class="empty-state" hidden><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h3>No hay proyectos que coincidan.</h3><p>Prueba otra tecnología o explora todos los proyectos.</p><button id="resetProjects" class="btn btn-ghost" type="button">Mostrar todos los proyectos</button></div>
+        <a class="social-link all-code" href="https://github.com/AlfredoMartinezCantero/" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Más código en GitHub <svg class="icon social-arrow" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(nueva pestaña)</span></a>
+      </div>
+    </section>
 
-        <div id="gridProyectos" class="grid" aria-live="polite" aria-busy="false" aria-label="Lista de proyectos">
-          <!-- Tarjetas inyectadas dinámicamente por app.js -->
+    <section id="skills" class="section skills-section" aria-labelledby="skills-heading">
+      <div class="container">
+        <div class="section-head reveal"><div><p class="eyebrow section-kicker"><span>02 /</span> Mi caja de herramientas</p><h2 id="skills-heading">La tecnología al servicio<br>de <span class="text-muted">la solución.</span></h2></div><p class="section-intro">Del modelo de datos a la interfaz. Estas son las tecnologías con las que construyo y experimento.</p></div>
+        <div class="skills-grid">
+          <article class="skill-group reveal"><svg class="icon skill-icon" aria-hidden="true"><use href="#i-code"/></svg><span class="skill-number" aria-hidden="true">01</span><h3>Lenguajes</h3><p>La base para construir.</p><ul class="tech-list"><li>Python</li><li>JavaScript</li><li>PHP</li><li>SQL</li></ul></article>
+          <article class="skill-group reveal"><svg class="icon skill-icon" aria-hidden="true"><use href="#i-window"/></svg><span class="skill-number" aria-hidden="true">02</span><h3>Frontend</h3><p>Interfaces que toman forma.</p><ul class="tech-list"><li>HTML5</li><li>CSS3</li><li>Canvas</li><li>SVG</li></ul></article>
+          <article class="skill-group reveal"><svg class="icon skill-icon" aria-hidden="true"><use href="#i-server"/></svg><span class="skill-number" aria-hidden="true">03</span><h3>Backend</h3><p>La lógica detrás de la experiencia.</p><ul class="tech-list"><li>Flask</li><li>FastAPI</li><li>PHP</li><li>PDO</li></ul></article>
+          <article class="skill-group reveal"><svg class="icon skill-icon" aria-hidden="true"><use href="#i-database"/></svg><span class="skill-number" aria-hidden="true">04</span><h3>Bases de datos</h3><p>Datos conectados, bien organizados.</p><ul class="tech-list"><li>MySQL</li><li>SQLite</li><li>MongoDB</li><li>MariaDB</li></ul></article>
+          <article class="skill-group reveal"><svg class="icon skill-icon" aria-hidden="true"><use href="#i-tool"/></svg><span class="skill-number" aria-hidden="true">05</span><h3>Herramientas</h3><p>Un entorno para crear y colaborar.</p><ul class="tech-list"><li>Git</li><li>GitHub</li><li>Docker</li></ul></article>
+          <article class="skill-group reveal"><svg class="icon skill-icon" aria-hidden="true"><use href="#i-ai"/></svg><span class="skill-number" aria-hidden="true">06</span><h3>Inteligencia artificial</h3><p>Modelos locales, aplicaciones reales.</p><ul class="tech-list"><li>Ollama</li><li>LLM</li><li>ComfyUI</li><li>SDXL</li></ul></article>
         </div>
       </div>
     </section>
 
-    <!-- CONTACTO -->
-    <section id="contacto" class="section" aria-labelledby="contacto-heading">
-      <div class="container">
-        <h2 id="contacto-heading">Contacto</h2>
-        <div class="contact-card">
-          <p class="lead">¿Tienes un proyecto en mente o quieres conocer más sobre mi trabajo?</p>
-          <div class="contact-actions">
-            <a class="btn btn-primary"
-               href="https://mail.google.com/mail/?view=cm&fs=1&to=alfredomartinezcantero@gmail.com&su=Contacto%20desde%20tu%20portafolio"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Enviar correo a Alfredo (abre Gmail)">
-              ✉ Enviar email
-            </a>
-            <a class="btn btn-ghost"
-               href="https://www.linkedin.com/in/alfredomart%C3%ADnez/"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Perfil de LinkedIn de Alfredo">
-              LinkedIn
-            </a>
-            <a class="btn btn-ghost"
-               href="https://github.com/AlfredoMartinezCantero/"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Perfil de GitHub de Alfredo">
-              GitHub
-            </a>
+    <section id="sobre-mi" class="section about-section" aria-labelledby="sobre-heading">
+      <div class="container about-layout">
+        <div class="about-heading reveal"><p class="eyebrow section-kicker"><span>03 /</span> Un poco más de mí</p><h2 id="sobre-heading">Aprender.<br>Construir.<br><span class="text-muted">Volver a empezar.</span></h2><div class="about-signature"><span class="brand">amc<span class="brand-dot">.</span></span><span>Alfredo Martínez Cantero<br>Valencia, España</span></div></div>
+        <div class="about-content reveal"><p class="about-lead">Me interesa entender cómo funcionan las cosas. Y después, hacer que funcionen mejor.</p><p>Soy estudiante de <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong>. Trabajo con Python, SQL y Flask / PHP, y desarrollo interfaces dinámicas con JavaScript, Canvas y SVG.</p><p>Mi interés por el <strong>desarrollo Full Stack</strong> me lleva a conectar cada parte de una aplicación: desde el modelado de datos —entidades, relaciones, vistas e índices— hasta la experiencia de quien la utiliza.</p><p>En mis proyectos exploro la <strong>automatización y la inteligencia artificial local</strong>: asistentes integrados con Chatwoot, generación de contenido y flujos con Python y Docker. Aprendo desarrollando soluciones para problemas concretos.</p><div class="about-facts"><div><span>FORMACIÓN</span><strong>Estudiante DAM</strong></div><div><span>ENFOQUE</span><strong>Desarrollo Full Stack</strong></div><div><span>EXPLORANDO</span><strong>Automatización e IA local</strong></div></div></div>
+      </div>
+    </section>
+
+    <section id="contacto" class="section contact-section" aria-labelledby="contacto-heading">
+      <div class="container contact-inner reveal">
+        <p class="eyebrow section-kicker"><span>04 /</span> La próxima conversación</p>
+        <div class="contact-heading"><h2 id="contacto-heading">Las buenas ideas<br>empiezan <span class="accent">hablando.</span></h2><svg class="contact-arrow icon" aria-hidden="true"><use href="#i-external"/></svg></div>
+        <p class="lead">¿Quieres conocer más sobre mi trabajo, compartir una idea o explorar una colaboración? Hablemos.</p>
+        <div class="contact-bottom">
+          <a class="contact-email" href="https://mail.google.com/mail/?view=cm&fs=1&to=alfredomartinezcantero@gmail.com&su=Contacto%20desde%20tu%20portafolio" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>alfredomartinezcantero@gmail.com</span><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(abre Gmail en una nueva pestaña)</span></a>
+          <div class="contact-socials">
+            <a class="social-link" href="https://www.linkedin.com/in/alfredomart%C3%ADnez/" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg> LinkedIn <svg class="icon social-arrow" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(nueva pestaña)</span></a>
+            <a class="social-link" href="https://github.com/AlfredoMartinezCantero/" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub <svg class="icon social-arrow" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(nueva pestaña)</span></a>
           </div>
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer" role="contentinfo">
-    <div class="container footer-inner">
-      <span class="footer-brand">AMC</span>
-      <small>© <span id="year"></span> Alfredo Martínez Cantero — Valencia</small>
-    </div>
-  </footer>
-
-  <script src="./assets/js/app.js"></script>
+  <footer class="footer"><div class="container footer-inner"><a class="brand" href="#inicio" aria-label="amc. — Volver al inicio">amc<span class="brand-dot">.</span></a><small>© <span id="year">2026</span> Alfredo Martínez Cantero</small><span class="footer-note">Hecho con código y curiosidad.</span><a class="back-top" href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a></div></footer>
+  <dialog id="projectDialog" class="project-dialog" aria-labelledby="dialogTitle" aria-describedby="dialogDescription"><div class="dialog-inner"><button id="closeDialog" class="icon-btn dialog-close" type="button" aria-label="Cerrar detalles del proyecto" autofocus><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button><div class="dialog-media" id="dialogMedia"></div><div class="dialog-content"><p class="eyebrow" id="dialogCategory"></p><h2 id="dialogTitle"></h2><p id="dialogDescription"></p><h3>Tecnologías utilizadas</h3><ul id="dialogStack" class="tech-list"></ul><div id="dialogLinks" class="dialog-links"></div></div></div></dialog>
 </body>
 </html>
