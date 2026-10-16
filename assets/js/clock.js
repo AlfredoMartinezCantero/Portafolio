@@ -1,14 +1,16 @@
-import { initTheme } from './ui.js';
+import { initTheme, initLanguageSwitch } from './ui.js';
+import { language, copy } from './i18n.js';
 
 initTheme();
+initLanguageSwitch();
 const canvas = document.getElementById('clockCanvas');
 const ctx = canvas.getContext('2d');
 const time = document.getElementById('clockTime');
 const date = document.getElementById('clockDate');
 const note = document.getElementById('clockNote');
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
-const timeFormat = new Intl.DateTimeFormat('es', { hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
-const dateFormat = new Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const timeFormat = new Intl.DateTimeFormat(language, { hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+const dateFormat = new Intl.DateTimeFormat(language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 let size = 0;
 let frame;
 let timer;
@@ -118,7 +120,7 @@ function tick(timestamp) {
 
 function start() {
   stop();
-  note.textContent = motion.matches ? 'Movimiento reducido: el reloj se actualiza una vez por segundo.' : 'Manecillas continuas con requestAnimationFrame. Se pausa cuando esta pestaña está oculta.';
+  note.textContent = motion.matches ? copy.reducedClock : copy.continuousClock;
   if (document.hidden) return;
   draw();
   if (motion.matches) timer = setTimeout(start, 1000 - new Date().getMilliseconds());

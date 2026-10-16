@@ -7,6 +7,8 @@
   <meta name="theme-color" content="#101217">
   <title>Reloj Analógico Dinámico — Alfredo Martínez Cantero</title>
   <meta name="description" content="Demo de un reloj analógico en tiempo real con Canvas API y requestAnimationFrame, por Alfredo Martínez Cantero.">
+  <link rel="alternate" hreflang="es" href="./reloj.html">
+  <link rel="alternate" hreflang="en" href="./reloj-en.html">
   <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
   <script src="./assets/js/theme.js"></script>
   <link rel="preload" href="./assets/fonts/syne-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -16,7 +18,7 @@
 </head>
 <body class="clock-page">
   <a class="skip-link" href="#contenido">Saltar al reloj</a>
-  <header class="container clock-nav"><a class="brand" href="./" aria-label="amc. — Alfredo Martínez Cantero, volver al portafolio">amc<span class="brand-dot">.</span></a><a class="text-link" href="./#proyectos">← Volver a proyectos</a><button id="toggleTheme" class="icon-btn" type="button" aria-label="Activar tema claro" hidden><svg class="icon theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><svg class="icon theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10 10.1Z"/></svg></button></header>
+  <header class="container clock-nav"><a class="brand" href="./" aria-label="amc. — Alfredo Martínez Cantero, volver al portafolio">amc<span class="brand-dot">.</span></a><a class="text-link" href="./#proyectos">← Volver a proyectos</a><div class="nav-actions"><a id="languageToggle" class="icon-btn language-switch" href="./reloj-en.html" hreflang="en" lang="en" aria-label="EN — Switch to English">EN</a><button id="toggleTheme" class="icon-btn" type="button" aria-label="Activar tema claro" hidden><svg class="icon theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><svg class="icon theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10 10.1Z"/></svg></button></div></header>
   <main id="contenido" class="container clock-main" tabindex="-1">
     <p class="eyebrow">Experimento / JavaScript + Canvas API</p>
     <h1>El tiempo, <span class="text-muted">dibujado.</span></h1>

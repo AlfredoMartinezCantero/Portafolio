@@ -5,6 +5,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PROJECTS } from '../assets/js/projects.js';
+import { PROJECTS_EN } from '../assets/js/projects-en.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(resolve(root, '.qa-tools/package.json'));
@@ -44,6 +45,23 @@ try {
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await visibleCards(), 7);
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+  const floating = await page.locator('.hero-visual').evaluate(node => {
+    const animation = node.getAnimations().find(item => item.animationName === 'hero-float');
+    const timing = animation.effect.getTiming();
+    animation.pause();
+    const positions = [0, .125, .25, .375, .5, .625, .75, .875, .999, 1.001].map(phase => {
+      animation.currentTime = timing.delay + timing.duration * phase;
+      return Number.parseFloat(getComputedStyle(node).translate.split(' ')[1] || '0');
+    });
+    animation.play();
+    return { infinite: timing.iterations === Infinity, positions };
+  });
+  assert.ok(floating.infinite);
+  const y = floating.positions;
+  assert.ok(y[0] > y[1] && y[1] > y[2] && y[2] > y[3] && y[3] > y[4], 'Subida sin reposos');
+  assert.ok(y[4] < y[5] && y[5] < y[6] && y[6] < y[7], 'Bajada sin reposos');
+  assert.ok(Math.abs(y[8] - y[9]) < .01, 'Repetición sin salto');
+  check('Foto con movimiento continuo en ambas mitades del ciclo y repetición fluida');
   for (const project of PROJECTS) {
     const card = page.locator(`[data-project="${project.id}"]`);
     assert.equal(await card.locator('h3').textContent(), project.titulo);
@@ -133,6 +151,7 @@ try {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(base);
   assert.equal(await page.locator('html').evaluate(node => getComputedStyle(node).scrollBehavior), 'auto');
+  assert.equal(await page.locator('.hero-visual').evaluate(node => node.getAnimations().length), 0);
   await page.locator('[data-filter="ia"]').click();
   assert.equal(await visibleCards(), 2);
   check('Movimiento reducido en navegación y filtros');
@@ -164,6 +183,67 @@ try {
   await highDpi.close();
   check('Canvas con densidad 2x');
 
+  await page.goto(`${base}/#sobre-mi`);
+  await page.locator('#languageToggle').click();
+  await page.waitForURL('**/index-en.html#sobre-mi');
+  assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+  assert.equal(await visibleCards(), 7);
+  assert.equal(await page.locator('#projectStatus').textContent(), '7 of 7 projects');
+  for (const project of PROJECTS_EN) {
+    const card = page.locator(`[data-project="${project.id}"]`);
+    assert.equal(await card.locator('h3').textContent(), project.titulo);
+    await card.locator('[data-details]').click();
+    assert.equal(await page.locator('#dialogDescription').textContent(), project.descripcion);
+    assert.equal(await page.locator('#closeDialog').getAttribute('aria-label'), 'Close project details');
+    await page.keyboard.press('Escape');
+  }
+  await page.locator('#projectSearch').fill('simulation');
+  assert.equal(await visibleCards(), 1);
+  await page.locator('#projectSearch').fill('zzzz-no-project');
+  assert.ok(await page.getByRole('heading', { name: 'No matching projects.' }).isVisible());
+  await page.locator('#resetProjects').click();
+  await page.locator('[data-filter="bbdd"]').click();
+  assert.equal(await visibleCards(), 3);
+  assert.equal(await page.locator('#projectStatus').textContent(), '3 of 7 projects in Databases');
+  await page.locator('[data-filter="all"]').click();
+  for (const theme of ['dark', 'light']) {
+    if (await page.locator('html').getAttribute('data-theme') !== theme) await page.locator('#toggleTheme').click();
+    assert.equal(await page.locator('#toggleTheme').getAttribute('aria-label'), theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    for (const width of [320, 390, 768, 1024, 1100, 1440, 2560]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Inglés ${theme} a ${width}px sin desbordamiento`);
+      if ([390, 1440].includes(width)) {
+        await page.goto(`${base}/index-en.html`);
+        await page.evaluate(() => document.fonts.ready);
+        await screenshot(`en-${theme}-${width}.png`, true);
+        await axe(`Inglés ${theme} a ${width}px`);
+      }
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('#menuToggle').click();
+  assert.equal(await page.locator('#menuToggle').getAttribute('aria-label'), 'Close menu');
+  await page.locator('#mobileMenu a[href="#contacto"]').click();
+  assert.equal(await page.locator('#menuToggle').getAttribute('aria-label'), 'Open menu');
+  await page.locator('#languageToggle').click();
+  await page.waitForURL('**/index.html#contacto');
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+  await page.locator('#languageToggle').click();
+  await page.waitForURL('**/index-en.html#contacto');
+  await page.locator('[data-project="reloj-canvas"] .project-demo').click();
+  await page.waitForURL('**/reloj-en.html');
+  await page.waitForFunction(() => document.querySelector('#clockTime').textContent.length === 8);
+  assert.match(await page.locator('#clockNote').textContent(), /Smooth hands/);
+  assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await page.locator('#languageToggle').click();
+  await page.waitForURL('**/reloj.html');
+  await page.locator('#languageToggle').click();
+  await page.waitForURL('**/reloj-en.html');
+  await page.locator('a[href="./index-en.html#proyectos"]').first().click();
+  await page.waitForURL('**/index-en.html#proyectos');
+  check('Inglés: siete proyectos y detalles, filtros, búsqueda, temas, móvil, accesibilidad, reloj y cambio de idioma con sección conservada');
+
   const noStorage = await browser.newContext({ viewport: { width: 390, height: 844 } });
   await noStorage.addInitScript(() => Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('Bloqueado', 'SecurityError'); } }));
   const blocked = await noStorage.newPage();
@@ -184,6 +264,13 @@ try {
   assert.ok(await staticPage.locator('#projectControls').isHidden());
   assert.ok(await staticPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await staticPage.screenshot({ path: resolve(output, 'no-javascript.png'), fullPage: true });
+  await staticPage.locator('#languageToggle').click();
+  await staticPage.waitForURL('**/index-en.html');
+  assert.equal(await staticPage.locator('html').getAttribute('lang'), 'en');
+  assert.ok(await staticPage.locator('#projectFallback').isVisible());
+  assert.equal(await staticPage.locator('#projectFallback a').count(), 7);
+  assert.ok(await staticPage.getByRole('link', { name: 'Dynamic Analogue Clock' }).isVisible());
+  assert.ok(await staticPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await noJS.close();
   check('Sin JavaScript: siete proyectos, navegación móvil, contacto y contenido accesibles');
 

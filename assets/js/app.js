@@ -1,10 +1,10 @@
-import { PROJECTS } from './projects.js';
-import { initTheme } from './ui.js';
+import { PROJECTS as PROJECTS_ES } from './projects.js';
+import { PROJECTS_EN } from './projects-en.js';
+import { initTheme, initLanguageSwitch } from './ui.js';
+import { language, copy } from './i18n.js';
 
-const CATEGORY_LABELS = {
-  frontend: 'Frontend', backend: 'Backend', bbdd: 'Bases de datos',
-  ia: 'Inteligencia artificial', fullstack: 'Full Stack', otros: 'Otros',
-};
+const PROJECTS = language === 'en' ? PROJECTS_EN : PROJECTS_ES;
+const CATEGORY_LABELS = copy.categories;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 /** Construye nodos sin interpretar los datos como HTML. */
@@ -41,7 +41,7 @@ function projectLink(url, label, className = 'text-link') {
   if (target.origin !== location.origin) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.append(icon('external'), element('span', 'sr-only', ' (nueva pestaña)'));
+    link.append(icon('external'), element('span', 'sr-only', copy.newTab));
   } else {
     link.append(icon('arrow'));
   }
@@ -59,7 +59,7 @@ function projectImage(project, full = false) {
       : `${project.preview} ${project.width}w`;
     img.sizes = full ? '(max-width: 780px) 90vw, 700px' : '(max-width: 699px) 90vw, (max-width: 1099px) 45vw, (max-width: 1320px) 30vw, 400px';
   }
-  img.alt = `Captura de ${project.titulo}`;
+  img.alt = copy.screenshot(project.titulo);
   img.width = project.width;
   img.height = project.height;
   img.loading = full ? 'eager' : 'lazy';
@@ -72,7 +72,7 @@ function projectImage(project, full = false) {
       img.src = project.img;
       return;
     }
-    const placeholder = element('span', 'media-placeholder', 'Captura no disponible');
+    const placeholder = element('span', 'media-placeholder', copy.noScreenshot);
     img.replaceWith(placeholder);
   });
   return img;
@@ -80,7 +80,7 @@ function projectImage(project, full = false) {
 
 function techList(technologies) {
   const list = element('ul', 'tech-list');
-  list.setAttribute('aria-label', 'Tecnologías utilizadas');
+  list.setAttribute('aria-label', copy.technologies);
   for (const technology of technologies) list.append(element('li', '', technology));
   return list;
 }
@@ -91,7 +91,7 @@ function initMenu() {
   const desktop = matchMedia('(min-width: 800px)');
   function setOpen(open, restoreFocus = false) {
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    toggle.setAttribute('aria-label', open ? copy.closeMenu : copy.openMenu);
     menu.hidden = !open;
     if (restoreFocus) toggle.focus();
   }
@@ -148,7 +148,7 @@ function initProjectDialog() {
     document.getElementById('dialogMedia').replaceChildren(projectImage(project, true));
     const stack = document.getElementById('dialogStack');
     stack.replaceChildren(...project.stack.map(technology => element('li', '', technology)));
-    const links = [projectLink(project.demo, project.demo.startsWith('./') ? 'Abrir demo interactiva' : 'Ver presentación en LinkedIn', 'btn btn-primary'), projectLink(project.code, 'Ver código', 'btn btn-ghost')].filter(Boolean);
+    const links = [projectLink(project.demo, project.demo.startsWith('./') ? copy.interactiveDemo : copy.presentation, 'btn btn-primary'), projectLink(project.code, copy.viewCode, 'btn btn-ghost')].filter(Boolean);
     document.getElementById('dialogLinks').replaceChildren(...links);
     dialog.showModal();
     dialog.scrollTop = 0;
@@ -162,7 +162,7 @@ function createCard(project, index) {
   card.setAttribute('aria-labelledby', `title-${project.id}`);
   const media = element('div', 'project-media');
   media.append(projectImage(project));
-  if (project.destacado) media.append(element('span', 'featured-label', 'Proyecto destacado'));
+  if (project.destacado) media.append(element('span', 'featured-label', copy.featured));
   const body = element('div', 'project-body');
   const meta = element('div', 'project-meta');
   meta.append(element('span', '', CATEGORY_LABELS[project.categoria]), element('span', '', String(index + 1).padStart(2, '0')));
@@ -173,20 +173,20 @@ function createCard(project, index) {
   const list = techList(tags);
   if (project.stack.length > tags.length) {
     const more = element('li', '', `+${project.stack.length - tags.length}`);
-    more.setAttribute('aria-label', `${project.stack.length - tags.length} tecnologías más en los detalles`);
+    more.setAttribute('aria-label', copy.moreTechnologies(project.stack.length - tags.length));
     list.append(more);
   }
   body.append(list);
   const actions = element('div', 'project-actions');
-  const detail = element('button', 'detail-button', 'Ver detalles');
+  const detail = element('button', 'detail-button', copy.details);
   detail.type = 'button';
   detail.dataset.details = project.id;
   detail.setAttribute('aria-haspopup', 'dialog');
-  detail.setAttribute('aria-label', `Ver detalles de ${project.titulo}`);
+  detail.setAttribute('aria-label', copy.projectDetails(project.titulo));
   detail.append(element('span', '', '+'));
-  const demo = projectLink(project.demo, project.demo.startsWith('./') ? 'Abrir demo' : 'Ver proyecto', 'btn btn-primary project-demo');
+  const demo = projectLink(project.demo, project.demo.startsWith('./') ? copy.openDemo : copy.viewProject, 'btn btn-primary project-demo');
   if (demo) actions.append(demo);
-  const code = projectLink(project.code, 'Código');
+  const code = projectLink(project.code, copy.code);
   if (code) actions.append(code);
   actions.append(detail);
   card.append(media, body, actions);
@@ -200,7 +200,7 @@ function initProjects() {
   const status = document.getElementById('projectStatus');
   const empty = document.getElementById('emptyProjects');
   const openDetails = initProjectDialog();
-  const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('es').trim();
+  const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(language).trim();
   const cards = PROJECTS.map((project, index) => ({
     project, node: createCard(project, index),
     searchText: normalize([project.titulo, ...project.stack].join(' ')),
@@ -226,8 +226,7 @@ function initProjects() {
     }
     empty.hidden = count > 0;
     grid.hidden = count === 0;
-    const categoryText = category === 'all' ? '' : ` en ${CATEGORY_LABELS[category]}`;
-    status.textContent = `${count} de ${PROJECTS.length} proyectos${categoryText}${query ? ` para «${search.value.trim()}»` : ''}`;
+    status.textContent = copy.results(count, PROJECTS.length, category === 'all' ? '' : CATEGORY_LABELS[category], search.value.trim());
     grid.setAttribute('aria-busy', 'false');
   }
   filters.addEventListener('click', event => {
@@ -277,6 +276,7 @@ function initObservers() {
 }
 
 initTheme();
+initLanguageSwitch();
 initMenu();
 document.getElementById('year').textContent = new Date().getFullYear();
 initProjects();

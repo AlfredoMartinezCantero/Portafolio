@@ -1,6 +1,6 @@
 # Portafolio · Alfredo Martínez Cantero
 
-Portafolio estático en español de un estudiante de Desarrollo de Aplicaciones Multiplataforma en Valencia. HTML5, CSS3 y JavaScript con módulos nativos; sin frameworks, compilación ni dependencias de producción.
+Portafolio estático en español e inglés de un estudiante de Desarrollo de Aplicaciones Multiplataforma en Valencia. HTML5, CSS3 y JavaScript con módulos nativos; sin frameworks, compilación ni dependencias de producción.
 
 ## Ejecutar en local
 
@@ -14,17 +14,21 @@ Abre **http://127.0.0.1:4173**. Puedes elegir otro puerto con `node scripts/serv
 
 También funciona con cualquier servidor estático, incluido Live Server. Los módulos requieren HTTP: no abrir `index.html` mediante `file://`.
 
-Para publicar, sube `index.html`, `reloj.html` y `assets/` a un hosting estático convencional (por ejemplo, GitHub Pages). No es necesario subir `scripts/`, los informes ni las herramientas de QA. Este trabajo modifica el repositorio local; no crea un despliegue externo.
+Para publicar, sube `index.html`, `index-en.html`, `reloj.html`, `reloj-en.html` y `assets/` a un hosting estático convencional (por ejemplo, GitHub Pages). No es necesario subir `scripts/`, los informes ni las herramientas de QA. Este trabajo modifica el repositorio local; no crea un despliegue externo.
 
 ## Estructura
 
 ```text
 index.html                  Semántica, secciones, SVG y respaldo sin JavaScript
+index-en.html               Versión inglesa completa del portafolio
 reloj.html                  Demo del reloj y hora en formato textual
+reloj-en.html               Demo del reloj en inglés
 assets/css/style.css        Tokens, temas y componentes responsive
 assets/js/theme.js          Preferencia de tema antes de pintar la página
 assets/js/ui.js             Control de tema compartido
 assets/js/projects.js       Datos de los siete proyectos
+assets/js/projects-en.js    Textos ingleses, con los datos comunes compartidos
+assets/js/i18n.js           Textos dinámicos según el idioma de la página
 assets/js/app.js            Tarjetas, búsqueda, filtros, diálogo y navegación
 assets/js/clock.js          Canvas, alta densidad y ciclo de actualización
 assets/img/                 Fotografías y capturas originales conservadas
@@ -38,6 +42,8 @@ scripts/optimize-images.mjs Regeneración opcional de las variantes WebP
 
 - Identidad editorial con Syne y DM Sans, grafito, azul suave, superficies sobrias y modo claro completo. Las fuentes variables WOFF2 se sirven localmente, usan `font-display: swap` y tienen alternativas del sistema. Las licencias OFL se incluyen en `assets/fonts/`.
 - Hero con fotografía original, presentación, enlaces sociales y llamadas a proyectos y contacto.
+- Fotografía con flotación continua, sin reposos entre ciclos, respetando la preferencia de movimiento reducido.
+- Selector EN/ES visible en escritorio y móvil; funciona sin JavaScript y conserva la sección al cambiar de idioma con JavaScript. Ambas versiones incluyen metadatos y enlaces de idioma alternativo, y la demo del reloj mantiene el idioma del portafolio.
 - Siete proyectos conservados con nombres, descripciones completas, stacks, imágenes y enlaces originales. Dos destacados y resúmenes para explorar la colección.
 - Filtros combinados con búsqueda por nombre y tecnología, insensible a mayúsculas y acentos. Las categorías son múltiples cuando el stack lo justifica; «Otros» tiene un estado vacío explícito.
 - Las tarjetas se construyen una vez con APIs DOM y `textContent`. Los filtros cambian `hidden` sin volver a crear las tarjetas. Las URL se validan para admitir solo HTTP(S).
@@ -51,7 +57,7 @@ scripts/optimize-images.mjs Regeneración opcional de las variantes WebP
 
 ## Mantenimiento
 
-Edita `assets/js/projects.js` para actualizar proyectos. `descripcion` conserva el detalle completo y `resumen` alimenta las tarjetas; `categoria` identifica la categoría principal y `categorias` los filtros aplicables. `code: null` indica que no existe un enlace de código disponible: no se muestra un botón ficticio. Al añadir proyectos, actualiza también la lista alternativa de `#projectFallback` en `index.html`.
+Edita `assets/js/projects.js` para actualizar proyectos y `assets/js/projects-en.js` para sus traducciones. `descripcion` conserva el detalle completo y `resumen` alimenta las tarjetas; `categoria` identifica la categoría principal y `categorias` los filtros aplicables. `code: null` indica que no existe un enlace de código disponible: no se muestra un botón ficticio. Al añadir proyectos, actualiza también la lista alternativa de `#projectFallback` en `index.html` e `index-en.html`.
 
 Los originales de imágenes permanecen en sus rutas. Se incluyen variantes WebP de hasta 640 y 1280 px, con `srcset`, `sizes` y retorno al original si fallan. Las dimensiones en los datos permiten reservar su espacio; las capturas de las tarjetas se cargan de forma diferida. La fotografía inicial tiene prioridad alta. Los iconos son SVG locales, sin bibliotecas externas.
 

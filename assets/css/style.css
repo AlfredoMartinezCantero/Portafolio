@@ -105,6 +105,7 @@ main:focus { outline: none; }
 .nav-actions { display: flex; align-items: center; gap: .6rem; }
 .icon-btn { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 50%; padding: 0; transition: border-color var(--duration), background var(--duration); }
 .icon-btn:hover { border-color: var(--accent); background: var(--surface); }
+.language-switch { flex-shrink: 0; font: 600 .75rem var(--font-code); letter-spacing: .04em; }
 .theme-moon, [data-theme="light"] .theme-sun { display: none; }
 [data-theme="light"] .theme-moon { display: block; }
 .hamburger { flex-direction: column; gap: 6px; }
@@ -271,7 +272,7 @@ main:focus { outline: none; }
 
 /* 7. Demo Canvas */
 .clock-page { min-height: 100dvh; display: flex; flex-direction: column; }
-.clock-nav { display: flex; align-items: center; justify-content: space-between; min-height: 80px; }
+.clock-nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; min-height: 80px; padding-block: .75rem; }
 .clock-main { flex: 1; padding-block: 2.5rem 4rem; text-align: center; }
 .clock-main .eyebrow { justify-content: center; margin-bottom: 1rem; }
 .clock-main h1 { font-size: clamp(2.2rem, 5vw, 4rem); }
@@ -333,14 +334,14 @@ main:focus { outline: none; }
 @keyframes menu-in { from { opacity: .2; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes reveal-in { from { transform: translateY(16px); } to { transform: translateY(0); } }
 @keyframes hero-enter { from { translate: 0 16px; } to { translate: 0 0; } }
-/* Dos segundos de movimiento y dos de reposo en cada ciclo. */
+/* Ciclo continuo: sin tramos de reposo ni saltos entre repeticiones. */
 @keyframes hero-float {
-  0%, 50%, 100% { translate: 0 0; }
-  25% { translate: 0 -8px; }
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero-text { animation: reveal-in 650ms var(--ease); }
-  .hero-visual { animation: hero-enter 850ms var(--ease), hero-float 4s ease-in-out 2850ms infinite; }
+  .hero-visual { animation: hero-enter 850ms var(--ease), hero-float 3s linear 850ms infinite; }
   .reveal.is-visible, .project-card.is-entering { animation: reveal-in 550ms var(--ease) both; }
   .project-card.is-entering { animation-duration: 260ms; }
   .project-dialog[open] { animation: reveal-in 220ms var(--ease); }
