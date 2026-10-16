@@ -54,8 +54,8 @@ const PROJECTS = [
     stack:       ['PHP 8.2', 'SQLite', 'MySQL/MariaDB', 'PDO', 'HTML', 'CSS', 'JavaScript'],
     categoria:   'fullstack',
     img:         './assets/img/proyectos/gastos-simples.jpg',
-    demo:        null,
-    code:        'https://github.com/AlfredoMartinezCantero/Mini-proyecto-Gastos-simples-e-importacion-CSV',
+    demo:        'https://www.linkedin.com/feed/update/urn:li:activity:7516874488731303936/',
+    code:        null,
   },
   {
     id:          'copilot-ventas-ia',
