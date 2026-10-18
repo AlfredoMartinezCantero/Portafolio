@@ -42,7 +42,7 @@ export const PROJECTS = [
     ],
     "categoria": "ia",
     "img": "./assets/img/proyectos/ChatWoot.jpg",
-    "demo": "https://www.linkedin.com/feed/update/urn:li:activity:7465399617950773248/",
+    "demo": "https://www.linkedin.com/feed/update/urn:li:activity:7465399010728673280/",
     "code": null,
     "resumen": "IA local para analizar conversaciones de Chatwoot y ayudar a preparar la próxima respuesta.",
     "destacado": true,
